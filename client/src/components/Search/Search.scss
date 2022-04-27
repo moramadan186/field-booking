@@ -1,0 +1,46 @@
+.SearchCont{height: 100%;    padding: 5rem;}
+.searchGroup{
+    *{border: none; }
+    border: 1px solid #24DC89;
+    background-color: white;
+    max-width: 600px;
+    height: 57px;
+    border-radius: 30px;
+    justify-content: center;
+    align-items: center;
+
+
+
+    .searchBtn{
+        border-radius: 0 30px 30px 0;
+        flex-basis:150px ;
+        height: 100%;
+        // outline: 1px solid #24DC89;
+    }
+    .datePicker{
+        border-left:1px solid #24DC89;
+        
+    }
+    @media (max-width:600px) {
+        border-radius: 10px;
+        flex-direction: column;
+        height: 170px;
+        .searchBtn{width: 100%;height:fit-content;border-radius: 0 0 10px 10px;}
+        .datePicker{border-left: none;width: 100%;}
+
+    }
+
+}
+.searchWrapper{
+    margin-top: 6vw;
+    text-align: center;
+    h1{
+        margin-bottom: 2rem;
+        font-size: 2vw;
+        @media (max-width:600px) {
+            font-size: 5vw;
+        }
+    }
+    
+
+}
