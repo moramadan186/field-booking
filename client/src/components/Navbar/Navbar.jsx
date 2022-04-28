@@ -7,7 +7,8 @@ import useWindowDimensions from "./../../hooks/useWindowDimensions";
 import "./Navbar.scss";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import LoginIcon from "@mui/icons-material/Login";
-import Logo from './../Logo/Logo';
+import Logo from "./../Logo/Logo";
+import AccountMenu from "./../AccountMenu/AccountMenu";
 
 export const NavContext = React.createContext();
 
@@ -16,6 +17,9 @@ const NavBar = ({
   handleTabsChange,
   loggingValue,
   showLoggingBtns,
+  showAccountMenu,
+  setShowAccountMenu,
+  setShowLoggingBtns,
 }) => {
   /* Close the drawer when the user clicks outside of it */
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -23,6 +27,8 @@ const NavBar = ({
   const StyledBurgerRef = useRef(null);
   const { width } = useWindowDimensions();
   const navHeightRef = useRef(null);
+
+  //will be true when user login successfully
 
   useEffect(() => {
     setNavHeight(navHeightRef.current.clientHeight);
@@ -46,7 +52,7 @@ const NavBar = ({
       <Navbar.Fixed ref={navHeightRef}>
         <PageContainer>
           <Navbar.Wrapper>
-            <Logo/>
+            <Logo />
             <StyledBurger
               ref={StyledBurgerRef}
               open={openDrawer}
@@ -97,6 +103,16 @@ const NavBar = ({
                     </Button>
                   </Navbar.Item>
                 </>
+              ) : (
+                ""
+              )}
+              {showAccountMenu ? (
+                <Navbar.Item>
+                  <AccountMenu
+                    setShowLoggingBtns={setShowLoggingBtns}
+                    setShowAccountMenu={setShowAccountMenu}
+                  />
+                </Navbar.Item>
               ) : (
                 ""
               )}

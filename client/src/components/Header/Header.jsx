@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box } from "@mui/material";
 import Navbar from "../Navbar/Navbar";
 import Search from "../Search/Search";
@@ -9,13 +9,20 @@ const Header = ({
   handleTabsChange,
   navHeight,
   loggingValue,
+  showLoggingBtns,
+  showAccountMenu,
+  setShowLoggingBtns,
+  setShowAccountMenu,
 }) => {
   return (
     <Box className="headerCont">
       <Navbar
         setNavHeight={setNavHeight}
         handleTabsChange={handleTabsChange}
-        showLoggingBtns={true}
+        showLoggingBtns={showLoggingBtns}
+        showAccountMenu={showAccountMenu}
+        setShowAccountMenu={setShowAccountMenu}
+        setShowLoggingBtns={setShowLoggingBtns}
       />
       <Search />
       {/* <Loginup navHeight={navHeight} handleTabsChange={handleTabsChange} loggingValue={loggingValue}/> */}

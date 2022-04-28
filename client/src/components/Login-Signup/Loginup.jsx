@@ -42,6 +42,8 @@ export default function Loginup({
   loggingValue,
   handleTabsChange,
   setNavHeight,
+  setShowLoggingBtns,
+  setShowAccountMenu,
 }) {
   return (
     <>
@@ -62,7 +64,11 @@ export default function Loginup({
             <Tab label="signup" {...a11yProps(1)} />
           </Tabs>
           <TabPanel value={loggingValue} index={0}>
-            <Login handleClick={handleTabsChange} />
+            <Login
+              handleClick={handleTabsChange}
+              setShowLoggingBtns={setShowLoggingBtns}
+              setShowAccountMenu={setShowAccountMenu}
+            />
           </TabPanel>
           <TabPanel value={loggingValue} index={1}>
             <Signup />

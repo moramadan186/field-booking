@@ -18,6 +18,8 @@ const theme = createTheme({
 function App() {
   const [navHeight, setNavHeight] = useState();
   const [loggingValue, setLoggingValue] = React.useState(0);
+  const [showLoggingBtns, setShowLoggingBtns] = useState(true);
+  const [showAccountMenu, setShowAccountMenu] = useState(false);
 
   const handleTabsChange = (event, newValue) => {
     setLoggingValue(newValue);
@@ -37,6 +39,10 @@ function App() {
                   navHeight={navHeight}
                   handleTabsChange={handleTabsChange}
                   loggingValue={loggingValue}
+                  showLoggingBtns={showLoggingBtns}
+                  showAccountMenu={showAccountMenu}
+                  setShowLoggingBtns={setShowLoggingBtns}
+                  setShowAccountMenu={setShowAccountMenu}
                 />
               }
             />
@@ -48,6 +54,8 @@ function App() {
                   setNavHeight={setNavHeight}
                   handleTabsChange={handleTabsChange}
                   loggingValue={loggingValue}
+                  setShowLoggingBtns={setShowLoggingBtns}
+                  setShowAccountMenu={setShowAccountMenu}
                 />
               }
             />

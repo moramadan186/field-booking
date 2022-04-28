@@ -20,7 +20,7 @@ function Search() {
   const locations = ["Assiut", "Cairo", "Alex"];
   const [dateValue, setDateValue] = React.useState(new Date());
   const [searchValue, setSearchValue] = React.useState(locations[0]);
-  console.log(dateValue.toLocaleDateString("en-GB"), searchValue);
+  
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Grid
