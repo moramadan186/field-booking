@@ -11,54 +11,65 @@ import {
   Divider,
 } from "@mui/material";
 
-
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import "./Search.scss";
 function Search() {
-  const [value, setValue] = React.useState(new Date());
   const locations = ["Assiut", "Cairo", "Alex"];
+  const [dateValue, setDateValue] = React.useState(new Date());
+  const [searchValue, setSearchValue] = React.useState(locations[0]);
+  console.log(dateValue.toLocaleDateString("en-GB"), searchValue);
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Grid container justifyContent="center" className="SearchCont" >
+      <Grid
+        container
+        justifyContent="center"
+        className="SearchCont"
+        alignItems="center"
+      >
         <Box className="searchWrapper">
           <h1>Book a sports facility near you</h1>
           <Box>
             <form action="">
               {/* <FormControl> */}
-              <Stack
-                direction="row"
-                className="searchGroup"
-              >
+              <Stack direction="row" className="searchGroup">
                 <Autocomplete
-                  // popupIcon=''
+                  className="searchField"
                   openOnFocus={false}
                   freeSolo
                   forcePopupIcon={false}
-                  noOptionsText="none"
                   disablePortal
-                  id="combo-box-demo"
+                  id="searchField"
                   options={locations}
                   sx={{ width: 300 }}
+                  value={searchValue}
+                  onChange={(event, newValue) => {
+                    setSearchValue(newValue);
+                  }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
+                      name="searchField"
                       placeholder="Search for your field "
                     />
                   )}
                 />
                 <DatePicker
-                  
                   disablePast
                   views={["day"]}
-                  value={value}
+                  value={dateValue}
                   onChange={(newValue) => {
-                    setValue(newValue);
+                    setDateValue(newValue);
                   }}
                   renderInput={(params) => (
-                    <TextField {...params} helperText={null} className="datePicker"/>
+                    <TextField
+                      {...params}
+                      name="datePicker"
+                      helperText={null}
+                      className="datePicker"
+                    />
                   )}
                 />
                 <Button variant="contained" className="searchBtn">
