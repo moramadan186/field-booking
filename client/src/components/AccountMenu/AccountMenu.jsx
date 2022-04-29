@@ -1,4 +1,4 @@
-import React ,{useState}from "react";
+import React, { useState } from "react";
 import {
   Menu,
   MenuItem,
@@ -13,7 +13,7 @@ import Logout from "@mui/icons-material/Logout";
 import { Link, Navigate } from "react-router-dom";
 const AccountMenu = ({ setShowAccountMenu, setShowLoggingBtns }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [loggedOut , setLoggedOut]=useState(false)
+  const [loggedOut, setLoggedOut] = useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -25,8 +25,7 @@ const AccountMenu = ({ setShowAccountMenu, setShowLoggingBtns }) => {
   const handleLogout = () => {
     setShowAccountMenu(false);
     setShowLoggingBtns(true);
-    setLoggedOut(true)
-    
+    setLoggedOut(true);
   };
   if (loggedOut === true) return <Navigate to="/" />;
   return (
@@ -77,11 +76,11 @@ const AccountMenu = ({ setShowAccountMenu, setShowLoggingBtns }) => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem component={Link} to="/Account">
+        <MenuItem component={Link} to="/account">
           <Avatar /> My account
         </MenuItem>
         <Divider />
-        <MenuItem component={Link} to="/Account/settings">
+        <MenuItem component={Link} to="/account/settings">
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
