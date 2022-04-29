@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -13,12 +13,16 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import "./Account.scss";
 import { Avatar, Badge } from "@mui/material";
 import { Link } from "react-router-dom";
 import Logo from "./../Logo/Logo";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+import SettingsIcon from "@mui/icons-material/Settings";
+import { Routes, Route } from "react-router-dom";
+import EditingForm from "./EditingForm";
+import Cart from "./Cart";
+import useWindowDimensions from "./../../hooks/useWindowDimensions";
 
 const drawerWidth = 240;
 
@@ -81,6 +85,31 @@ export default function Account({ setNavHeight }) {
   const handleDrawerClose = () => {
     setOpen(!open);
   };
+
+  const listBtnStyle = {
+      minHeight: 48,
+      justifyContent: open ? "initial" : "center",
+      px: 2.5,
+    },
+    listIconStyle = {
+      minWidth: 0,
+      mr: open ? 3 : "auto",
+      justifyContent: "center",
+    };
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
+  let { width } = useWindowDimensions();
+  useEffect(() => {
+    if (window.location.pathname === "/account/settings") setSelectedIndex(0);
+    if (window.location.pathname === "/account/cart") setSelectedIndex(1);
+  }, []);
+  useEffect(() => {
+    if (width < 600) setOpen(false);
+    else setOpen(true);
+  }, [width]);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -148,37 +177,40 @@ export default function Account({ setNavHeight }) {
           </Badge>
         </Box>
         <List>
-          {["Profile", "Settings", "Password"].map((text, index) => (
-            <ListItemButton
-              key={text}
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          ))}
+          <ListItemButton
+            component={Link}
+            to="/account/settings"
+            selected={selectedIndex === 0}
+            onClick={(event) => handleListItemClick(event, 0)}
+            key={"settings"}
+            sx={listBtnStyle}
+          >
+            <ListItemIcon sx={listIconStyle}>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Settings"} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+          <ListItemButton
+            component={Link}
+            to="/account/cart"
+            selected={selectedIndex === 1}
+            onClick={(event) => handleListItemClick(event, 1)}
+            key={"Cart"}
+            sx={listBtnStyle}
+          >
+            <ListItemIcon sx={listIconStyle}>
+              <ShoppingCartCheckoutIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Cart"} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate nam
-          accusantium alias, similique debitis adipisci quidem fugit rerum
-          assumenda? Officiis, distinctio placeat. Incidunt itaque error odit,
-          ducimus quae omnis commodi.
-        </Typography>
+        <Routes>
+          <Route path="settings" element={<EditingForm />} />
+          <Route path="cart" element={<Cart />} />
+        </Routes>
       </Box>
     </Box>
   );
