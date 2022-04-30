@@ -1,0 +1,20 @@
+.formControlStack{
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    flex-direction: row;
+}
+.EditingFormLabel {
+    font-weight: 400;
+    font-size: 1.2rem;
+    min-width: 150px;
+
+    @media(max-width: 600px) {
+        font-size: 1rem;
+        padding-right: 1rem;
+        min-width: 100px;
+    }
+}
+.EditingFormControl{
+    margin: 1rem 0;
+}

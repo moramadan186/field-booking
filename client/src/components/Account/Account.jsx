@@ -1,28 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
+import {
+  Box,
+  List,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Avatar,
+  Badge,
+  Button,
+  ListItemButton,
+} from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import "./Account.scss";
-import { Avatar, Badge } from "@mui/material";
-import { Link } from "react-router-dom";
-import Logo from "./../Logo/Logo";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
+import useWindowDimensions from "./../../hooks/useWindowDimensions";
+import Logo from "./../Logo/Logo";
 import EditingForm from "./EditingForm";
 import Cart from "./Cart";
-import useWindowDimensions from "./../../hooks/useWindowDimensions";
+import vector from "../../assets/vector.svg";
+import PhotoCameraOutlinedIcon from "@mui/icons-material/PhotoCameraOutlined";
+import "./Account.scss";
 
 const drawerWidth = 240;
 
@@ -41,12 +42,15 @@ const closedMixin = (theme) => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  width: `calc(${theme.spacing(8)} + 1px)`,
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
-
+const drawerStyle = {
+  backgroundColor: "#efefefde",
+  border: "none",
+};
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -64,27 +68,30 @@ const Drawer = styled(MuiDrawer, {
   boxSizing: "border-box",
   ...(open && {
     ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
+    "& .MuiDrawer-paper": { ...openedMixin(theme), ...drawerStyle },
   }),
   ...(!open && {
     ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
+    "& .MuiDrawer-paper": { ...closedMixin(theme), ...drawerStyle },
   }),
 }));
 
 const SmallAvatar = styled(Avatar)(({ theme }) => ({
   width: 22,
   height: 22,
-  border: `2px solid ${theme.palette.background.paper}`,
+  backgroundColor: theme.palette.primary.main,
+
+  transition: theme.transitions.create(["all"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
 }));
 
-export default function Account({ setNavHeight }) {
+export default function Account() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
-
-  const handleDrawerClose = () => {
-    setOpen(!open);
-  };
+  const [open, setOpen] = useState(true);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  let { width } = useWindowDimensions();
 
   const listBtnStyle = {
       minHeight: 48,
@@ -96,24 +103,34 @@ export default function Account({ setNavHeight }) {
       mr: open ? 3 : "auto",
       justifyContent: "center",
     };
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
-  };
-  let { width } = useWindowDimensions();
   useEffect(() => {
     if (window.location.pathname === "/account/settings") setSelectedIndex(0);
     if (window.location.pathname === "/account/cart") setSelectedIndex(1);
   }, []);
+
   useEffect(() => {
     if (width < 600) setOpen(false);
     else setOpen(true);
   }, [width]);
 
+  const handleToggleDrawer = () => {
+    setOpen(!open);
+  };
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
+
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
+    <Box
+      sx={{
+        display: { sm: "flex" },
+        background: ` url(${vector}) no-repeat 110% 74%`,
+        backgroundSize: "cover",
+        minHeight: "100vh",
+      }}
+    >
       <Box
         className="accountNavbar"
         sx={{
@@ -122,25 +139,43 @@ export default function Account({ setNavHeight }) {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          p: 1,
-          transition: theme.transitions.create(["margin"], {
+          p: "25px 7%",
+          transition: theme.transitions.create(["margin-left"], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
           }),
-          marginLeft: open === true ? `${drawerWidth}px` : `70px`,
-          width: `calc(100% - ${drawerWidth}px)`,
+          marginLeft: {
+            sm: open === true ? `${drawerWidth}px` : `70px`,
+            xs: "65px",
+          },
+          width: {
+            sm:
+              open === true
+                ? `calc(100% - ${drawerWidth}px)`
+                : `calc(100% - 65px)`,
+            xs: `calc(100% - 65px)`,
+          },
         }}
       >
         <Logo />
+        <Button
+          component={Link}
+          to="/"
+          sx={{
+            color: "black",
+            mb: 1,
+          }}
+        >
+          Home
+        </Button>
       </Box>
 
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleToggleDrawer}>
             {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
-        <Divider />
         <Box sx={{ display: "flex", justifyContent: "center", my: 3 }}>
           <Badge
             overlap="circular"
@@ -150,18 +185,16 @@ export default function Account({ setNavHeight }) {
                 component={Link}
                 to="/"
                 alt="Remy Sharp"
-                src="/static/images/avatar/1.jpg"
+                src=""
                 sx={{
-                  width: open ? 40 : 0,
-                  height: open ? 40 : 0,
+                  width: open ? 30 : 0,
+                  height: open ? 30 : 0,
                   opacity: open ? 1 : 0,
                   visibility: open ? "visible" : "hidden",
-                  transition: theme.transitions.create(["all"], {
-                    easing: theme.transitions.easing.sharp,
-                    duration: theme.transitions.duration.leavingScreen,
-                  }),
                 }}
-              />
+              >
+                <PhotoCameraOutlinedIcon fontSize="small" />
+              </SmallAvatar>
             }
           >
             <Avatar
@@ -205,12 +238,17 @@ export default function Account({ setNavHeight }) {
           </ListItemButton>
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, p: { sm: "1% 7%", xs: "1% 7% 1% 85px" } }}
+      >
         <DrawerHeader />
-        <Routes>
-          <Route path="settings" element={<EditingForm />} />
-          <Route path="cart" element={<Cart />} />
-        </Routes>
+        <Box sx={{ width: { xs: "100%", md: "75%" } }}>
+          <Routes>
+            <Route path="settings" element={<EditingForm />} />
+            <Route path="cart" element={<Cart />} />
+          </Routes>
+        </Box>
       </Box>
     </Box>
   );
