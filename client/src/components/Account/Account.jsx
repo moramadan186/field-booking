@@ -16,11 +16,13 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import SettingsIcon from "@mui/icons-material/Settings";
+import KeyIcon from "@mui/icons-material/Key";
 import { Routes, Route, Link } from "react-router-dom";
 import useWindowDimensions from "./../../hooks/useWindowDimensions";
 import Logo from "./../Logo/Logo";
 import EditingForm from "./EditingForm";
 import Cart from "./Cart";
+import ResetPassword from "./ResetPassword";
 import vector from "../../assets/vector.svg";
 import PhotoCameraOutlinedIcon from "@mui/icons-material/PhotoCameraOutlined";
 import "./Account.scss";
@@ -105,8 +107,11 @@ export default function Account() {
     };
 
   useEffect(() => {
-    if (window.location.pathname === "/account/settings") setSelectedIndex(0);
-    if (window.location.pathname === "/account/cart") setSelectedIndex(1);
+    if (window.location.pathname === "/account/cart") setSelectedIndex(0);
+    else if (window.location.pathname === "/account/settings")
+      setSelectedIndex(1);
+    else if (window.location.pathname === "/account/reset-password")
+      setSelectedIndex(2);
   }, []);
 
   useEffect(() => {
@@ -120,6 +125,8 @@ export default function Account() {
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
+    if (event.target.selected === true) {
+    }
   };
 
   return (
@@ -212,29 +219,57 @@ export default function Account() {
         <List>
           <ListItemButton
             component={Link}
-            to="/account/settings"
+            to="/account/cart"
             selected={selectedIndex === 0}
             onClick={(event) => handleListItemClick(event, 0)}
+            key={"Cart"}
+            sx={listBtnStyle}
+          >
+            <ListItemIcon sx={listIconStyle}>
+              <ShoppingCartCheckoutIcon
+                sx={{
+                  color: selectedIndex === 0 ? theme.palette.primary.main : "",
+                }}
+              />
+            </ListItemIcon>
+            <ListItemText primary={"Cart"} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+          <ListItemButton
+            component={Link}
+            to="/account/settings"
+            selected={selectedIndex === 1}
+            onClick={(event) => handleListItemClick(event, 1)}
             key={"settings"}
             sx={listBtnStyle}
           >
             <ListItemIcon sx={listIconStyle}>
-              <SettingsIcon />
+              <SettingsIcon
+                sx={{
+                  color: selectedIndex === 1 ? theme.palette.primary.main : "",
+                }}
+              />
             </ListItemIcon>
             <ListItemText primary={"Settings"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
           <ListItemButton
             component={Link}
-            to="/account/cart"
-            selected={selectedIndex === 1}
-            onClick={(event) => handleListItemClick(event, 1)}
-            key={"Cart"}
+            to="/account/reset-password"
+            selected={selectedIndex === 2}
+            onClick={(event) => handleListItemClick(event, 2)}
+            key={"reset-password"}
             sx={listBtnStyle}
           >
             <ListItemIcon sx={listIconStyle}>
-              <ShoppingCartCheckoutIcon />
+              <KeyIcon
+                sx={{
+                  color: selectedIndex === 2 ? theme.palette.primary.main : "",
+                }}
+              />
             </ListItemIcon>
-            <ListItemText primary={"Cart"} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText
+              primary={"Reset Password"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
           </ListItemButton>
         </List>
       </Drawer>
@@ -247,6 +282,7 @@ export default function Account() {
           <Routes>
             <Route path="settings" element={<EditingForm />} />
             <Route path="cart" element={<Cart />} />
+            <Route path="reset-password" element={<ResetPassword />} />
           </Routes>
         </Box>
       </Box>

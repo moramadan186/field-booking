@@ -87,7 +87,7 @@ const EditingForm = () => {
           </Stack>
         </FormControl>
         <Box display="flex" justifyContent="center" alignItems="center" mt={5}>
-          <Button type="submit" variant="contained" size="large">
+          <Button type="submit" variant="contained" size="medium">
             Save Changes
           </Button>
         </Box>
