@@ -5,8 +5,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./App.scss";
 import { StyledEngineProvider } from "@mui/material/styles";
 import Loginup from "./components/Login-Signup/Loginup";
-import Header from "./components/Header/Header";
 import Account from "./components/Account/Account";
+import Home from "./components/Home/Home";
 
 const theme = createTheme({
   palette: {
@@ -35,7 +35,7 @@ function App() {
             <Route
               path="/"
               element={
-                <Header
+                <Home
                   setNavHeight={setNavHeight}
                   navHeight={navHeight}
                   handleTabsChange={handleTabsChange}

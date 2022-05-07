@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box } from "@mui/material";
 import Navbar from "../Navbar/Navbar";
 import Search from "../Search/Search";
@@ -25,7 +25,6 @@ const Header = ({
         setShowLoggingBtns={setShowLoggingBtns}
       />
       <Search />
-      {/* <Loginup navHeight={navHeight} handleTabsChange={handleTabsChange} loggingValue={loggingValue}/> */}
     </Box>
   );
 };

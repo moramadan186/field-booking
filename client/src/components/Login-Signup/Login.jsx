@@ -14,7 +14,7 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Logo from "./../Logo/Logo";
-import { Navigate } from "react-router-dom";
+import { Navigate,useNavigate } from "react-router-dom";
 
 export const VisibilityIcon = ({ password, setPassword }) => {
   return (
@@ -36,17 +36,18 @@ const Login = ({ handleClick, setShowLoggingBtns, setShowAccountMenu }) => {
   const [checkRemember, setCheckRemember] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
-  const [toHome, setToHome] = React.useState(false);
-
+  // const [toHome, setToHome] = React.useState(false);
+  const navigate= useNavigate();
   const handleLoginSubmit = (e) => {
     e.preventDefault();
 
     //after checking that user have an account, redirect it to home page and setShowAccountmenu = true
-    setToHome(true);
+    // setToHome(true);
+    navigate('/');
     setShowLoggingBtns(false);
     setShowAccountMenu(true);
   };
-  if (toHome === true) return <Navigate to="/" />;
+  // if (toHome === true) return <Navigate to="/" />;
 
   return (
     <>
