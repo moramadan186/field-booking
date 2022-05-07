@@ -30,7 +30,7 @@ const Signup = () => {
 
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:8080/api/Signup", signupValues);
+    await axios.post("http://localhost:8080/api/Signup", JSON.stringify(signupValues));
   };
 
   return (
