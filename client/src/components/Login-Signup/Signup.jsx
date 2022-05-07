@@ -8,7 +8,7 @@ import {
   Checkbox,
   Stack,
 } from "@mui/material";
-
+import axios from "axios";
 import { VisibilityIcon } from "./Login";
 import Logo from "./../Logo/Logo";
 const Signup = () => {
@@ -28,8 +28,9 @@ const Signup = () => {
     setSignupValues({ ...signupValues, [fieldName]: event.target.value });
   };
 
-  const handleSignupSubmit = (e) => {
+  const handleSignupSubmit = async (e) => {
     e.preventDefault();
+    await axios.post("http://localhost:8080/api/Signup", signupValues);
   };
 
   return (
