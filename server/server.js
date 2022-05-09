@@ -1,26 +1,36 @@
-var express = require('express');
-var cors = require('cors');
-const path = require('path');
-var bodyParser = require('body-parser');
+var express = require("express");
+var cors = require("cors");
+// const path = require('path');
+var bodyParser = require("body-parser");
 
-var usersRoute = require('./route/usersRoute');
+// var usersRoute = require('./route/usersRoute');
 
-const PORT = process.env.port
+// const PORT = process.env.port
 var app = express();
 app.use(cors());
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(express.static(path.resolve(__dirname, '../client/src')));
-app.get("/api", (req, res) => {
-    res.json({ message: "Hello from server!" });
+// app.use(express.static(path.resolve(__dirname, '../client/src')));
+// app.get("/api", (req, res) => {
+//     res.json({ message: "Hello from server!" });
+//   });
+
+// app.use("/api", usersRoute);
+// app.use(express.static('../client'));
+
+app.get("/sign-up", (req, res) => {
+  res.json({
+    name: "mohamed",
+    age: 22,
   });
-  
-app.use("/api", usersRoute);
-app.use(express.static('../client'));
+});
 
+app.post("/sign-up", (req, res) => {
+  console.log(req.body);
+});
 
-app.listen(PORT,() =>{
-    console.log("Server started...................");
+app.listen(8080, () => {
+  console.log("Server started...................");
 });
