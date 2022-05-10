@@ -5,11 +5,12 @@ const { set } = require("express/lib/response");
 
 
 exports.userSingUp = async (req,res)=>{
+    console.log(req.body);
     try {
-    var userName=req.body.userName;
-    var userEmail=req.body.userEmail;
-    var userPassword=req.body.userpassword;
-    var userPhone=req.body.userPhone;
+    var userName=req.body.firstName + " "+req.body.surName;
+    var userEmail=req.body.email;
+    var userPassword=req.body.password;
+    var userPhone=req.body.phone;
     if(!userName|| !userEmail || !userPassword){
         return res.status(500).send('user Name , user Email and user password are required , cannot empty')
     }
