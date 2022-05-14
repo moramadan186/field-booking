@@ -23,6 +23,7 @@
     "react-scripts": "5.0.0",
     "sass": "^1.49.9",
     "styled-components": "^5.3.5",
+    "swiper": "^8.1.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -31,7 +32,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy":"http://localhost:8080/",
+  "proxy": "http://localhost:8080/",
   "eslintConfig": {
     "extends": [
       "react-app",
