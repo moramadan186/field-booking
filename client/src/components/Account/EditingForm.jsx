@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FormControl, TextField, Stack, Button, Box } from "@mui/material";
+import { useAuth } from "../Auth/Auth";
 const textFieldStyle = {
   flexGrow: "1",
   margin: "0 0 3px 0 ",
@@ -7,19 +8,22 @@ const textFieldStyle = {
 };
 
 const EditingForm = () => {
+  const user = useAuth().user;
   const [editingsValues, setEditingsValues] = useState({
-    firstName: "Mohamed",
-    lastName: "Ramadan",
-    email: "mr01028760097@gmail.com",
-    phone: "01028760097",
+    firstName: user !== null ? user.firstName : "",
+    lastName: user !== null ? user.surName : "",
+    email: user !== null ? user.email : "",
+    phone: user !== null ? user.phone : "",
   });
+
+  // const user = Auth.user !== null ? Auth.user : null;
+
   const handleChange = (fieldName) => (event) => {
     setEditingsValues({ ...editingsValues, [fieldName]: event.target.value });
   };
   const handleEditingSubmit = (e) => {
     e.preventDefault();
   };
-  console.log(editingsValues);
   return (
     <>
       <h2 style={{ margin: "3rem 0 ", color: "#5a5a5a" }}>Settings</h2>

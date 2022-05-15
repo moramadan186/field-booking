@@ -1,9 +1,8 @@
-import React from 'react'
-
+import { useAuth } from "../Auth/Auth";
 const Cart = () => {
-  return (
-    <div>cart</div>
-  )
-}
+  const user = useAuth().user;
+  const cartItems = user !== null ? user.cartItems : null;
+  return <div>{cartItems !== null ? cartItems[0].id : ""}</div>;
+};
 
-export default Cart
+export default Cart;
