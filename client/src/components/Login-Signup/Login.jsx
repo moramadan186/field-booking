@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Grid,
   TextField,
@@ -11,10 +11,14 @@ import {
   IconButton,
   Box,
 } from "@mui/material";
+import axios from "axios";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Logo from "./../Logo/Logo";
-import { Navigate,useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./../Auth/Auth";
+import club1 from "../../assets/club1.jpeg";
+import club2 from "../../assets/club2.jpeg";
 
 export const VisibilityIcon = ({ password, setPassword }) => {
   return (
@@ -37,15 +41,72 @@ const Login = ({ handleClick, setShowLoggingBtns, setShowAccountMenu }) => {
 
   const [showPassword, setShowPassword] = useState(false);
   // const [toHome, setToHome] = React.useState(false);
-  const navigate= useNavigate();
-  const handleLoginSubmit = (e) => {
+  const navigate = useNavigate();
+  const Auth = useAuth();
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
+    await axios.post("http://localhost:8080/sign-in", {
+      userNameOrEmail: userNameOrEmail,
+      password: password,
+    });
 
-    //after checking that user have an account, redirect it to home page and setShowAccountmenu = true
-    // setToHome(true);
-    navigate('/');
+    /* 
+    - after checking that user have an account in backend ,
+    - backend send all user info like that
+    {
+    firstName: "Mohamed",
+    surName: "Ramadan",
+    email: "mr01028760097@gmail.com",
+    phone: "01028760097",
+    password: "12345",
+    profileIMG:"link",
+    cartItems:[{fieldName:"",fieldImage:"", date:"", time:"", price:""},{}]
+
+    }
+    to router link: 8080/user-info
+    - forntend  redirect it to home page with putting received backend data on the profile 
+    - setShowAccountmenu = true
+    - setShowLoggingBtns(false)
+    */
+
+    const successUser = {
+      firstName: "Mohamed",
+      surName: "Ramadan",
+      email: "mr01028760097@gmail.com",
+      phone: "01028760097",
+      password: "12345",
+      profileIMG: "link",
+      cartItems: [
+        {
+          id: 1,
+          checked: false,
+          fieldName: "club 1",
+          fieldImage: club1,
+          date: "15/5/2022",
+          time: "07:00",
+          price: 100,
+        },
+        {
+          id: 2,
+          checked: true,
+          fieldName: "club 2",
+          fieldImage: club2,
+          date: "15/5/2022",
+          time: "09:00",
+          price: 120,
+        },
+      ],
+    };
+    Auth.login(successUser);
+    navigate("/");
     setShowLoggingBtns(false);
     setShowAccountMenu(true);
+
+    /*
+    - if backend not found user
+    - backend send to router link: 8080/user-info --> not found
+    - frontend will show form error message
+    */
   };
   // if (toHome === true) return <Navigate to="/" />;
 
