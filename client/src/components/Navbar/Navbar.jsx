@@ -27,12 +27,22 @@ const NavBar = ({
   const StyledBurgerRef = useRef(null);
   const { width } = useWindowDimensions();
   const navHeightRef = useRef(null);
+  const [showBg, setShowBg] = useState(false);
+
+  const changeBackground = () => {
+    if (window.scrollY >= 60) {
+      setShowBg(true);
+    } else {
+      setShowBg(false);
+    }
+  };
 
   //will be true when user login successfully
-
   useEffect(() => {
     setNavHeight(navHeightRef.current.clientHeight);
     document.addEventListener("mousedown", closeDrawer);
+    changeBackground();
+    window.addEventListener("scroll", changeBackground);
     return () => document.removeEventListener("mousedown", closeDrawer);
   }, []);
 
@@ -46,10 +56,17 @@ const NavBar = ({
       setOpenDrawer(false);
   };
 
+  const showBgStyle = {
+    backdropFilter: "blur(20px)",
+    // backdropFilter: openDrawer ? " none" : "blur(20px)",
+    backgroundColor: "#ffffff6b",
+    boxShadow: " 0 5px 10px -8px rgba(0, 0, 0, 0.2)",
+  };
+
   return (
     <>
       {width < 640 && <PageOverlay openDrawer={openDrawer} />}
-      <Navbar.Fixed ref={navHeightRef}>
+      <Navbar.Fixed ref={navHeightRef} style={showBg ? showBgStyle : {}}>
         <PageContainer>
           <Navbar.Wrapper>
             <Logo />
@@ -133,8 +150,8 @@ const Navbar = {
     z-index: 1002;
     border-top: 3px solid #24dc89;
     width: 100%;
+    transition: background 0.5s ease;
     /* box-shadow: 0 0.75rem 0.5rem -0.5rem rgba(0, 0, 0, 0.2); */
-    /* background-color: #ffffff; */
   `,
 
   Wrapper: styled.nav`
@@ -170,7 +187,7 @@ const Navbar = {
       right: 0;
       top: 0;
 
-      height: 100%;
+      height: 100vh;
       width: 65%;
 
       flex-direction: column-reverse;
@@ -178,7 +195,6 @@ const Navbar = {
       align-items: flex-start;
 
       background-color: #ffffff;
-
       padding: 4rem 9vw 1rem;
 
       transition: ${({ width }) =>

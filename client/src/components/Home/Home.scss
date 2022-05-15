@@ -1,0 +1,102 @@
+.popularClubs{
+    padding-block: 40px;
+}
+.swiper {
+    width: 100%;
+    height: 400px;
+    @media (max-width:576px) {
+        padding: 5px;
+    }
+    @media (min-width:577px)and(max-width:768px) {
+        padding: 20px;
+    }
+
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+// .swiper-slide img {
+//     display: block;
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+// }
+
+.swiper-slide .grid-item {
+    width: 300px;
+    padding: 5px;
+    border: 2px solid rgb(143, 231, 143);
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.swiper-slide .list-img {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 30px;
+    max-height: 500px;
+    overflow: hidden;
+    transition: 0.3s ease;
+    border-radius: 7px;
+}
+.swiper-slide .grid-item .list-img img {
+    transition: 0.5s ease;
+    height: 100%;
+    width: 100%;
+    border-radius: 7px;
+    
+}
+.swiper-slide .grid-item:hover .list-img {
+    transform: translateY(-10 px);
+}
+
+
+.swiper-slide .grid-item:hover .list-img img {
+    transform: translateY(-50px);
+}
+
+.des {
+    text-align: center;
+    color: #222;
+    font-weight: 600;
+}
+
+
+.read-more-btn {
+    color: #000000;
+    background-color: rgb(34, 227, 123);
+    cursor: pointer;
+    display: block;
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    width: fit-content;
+    font-size: 15px;
+    border-radius: 20px;
+    margin:10px auto;
+}
+
+.text.show-more .moretext {
+    display: inline;
+}
