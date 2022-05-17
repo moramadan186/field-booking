@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "@mui/material";
@@ -9,8 +9,6 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import LoginIcon from "@mui/icons-material/Login";
 import Logo from "./../Logo/Logo";
 import AccountMenu from "./../AccountMenu/AccountMenu";
-
-export const NavContext = React.createContext();
 
 const NavBar = ({
   setNavHeight,
@@ -41,10 +39,13 @@ const NavBar = ({
   useEffect(() => {
     setNavHeight(navHeightRef.current.clientHeight);
     document.addEventListener("mousedown", closeDrawer);
-    changeBackground();
-    window.addEventListener("scroll", changeBackground);
     return () => document.removeEventListener("mousedown", closeDrawer);
   }, []);
+  useEffect(() => {
+    changeBackground();
+    window.addEventListener("scroll", changeBackground);
+    return () => setShowBg(false);
+  });
 
   const closeDrawer = (event) => {
     if (
@@ -82,7 +83,9 @@ const NavBar = ({
 
             <Navbar.Items ref={drawerRef} open={openDrawer} width={width}>
               <Navbar.Item>
-                <ShoppingCartOutlinedIcon className="navbarCart" />
+                <Link to="/account/cart">
+                  <ShoppingCartOutlinedIcon className="navbarCart" />
+                </Link>
               </Navbar.Item>
               <Navbar.Item>
                 <Button

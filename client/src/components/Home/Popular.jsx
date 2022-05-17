@@ -1,4 +1,3 @@
-import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination, Keyboard, Mousewheel, Autoplay } from "swiper";
 import "swiper/css";
@@ -65,18 +64,18 @@ const Popular = () => {
         modules={[Pagination, FreeMode, Keyboard, Mousewheel, Autoplay]}
         className="mySwiper"
       >
-        {popularClubs.map((clubSrc) => (
-          <SwiperSlide>
+        {popularClubs.map((clubSrc, i) => (
+          <SwiperSlide key={i}>
             <ClubCard clubSrc={clubSrc} />
           </SwiperSlide>
         ))}
-        {popularClubs.map((clubSrc) => (
-          <SwiperSlide>
+        {popularClubs.map((clubSrc, i) => (
+          <SwiperSlide key={`second${i}`}>
             <ClubCard clubSrc={clubSrc} />
           </SwiperSlide>
         ))}
-        {popularClubs.map((clubSrc) => (
-          <SwiperSlide>
+        {popularClubs.map((clubSrc, i) => (
+          <SwiperSlide key={`third${i}`}>
             <ClubCard clubSrc={clubSrc} />
           </SwiperSlide>
         ))}

@@ -7,6 +7,8 @@ import { StyledEngineProvider } from "@mui/material/styles";
 import Loginup from "./components/Login-Signup/Loginup";
 import Account from "./components/Account/Account";
 import Home from "./components/Home/Home";
+import AuthProvider from "./components/Auth/Auth";
+import RequireAuth from "./components/Auth/RequireAuth";
 
 const theme = createTheme({
   palette: {
@@ -30,39 +32,48 @@ function App() {
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <CSSReset />
-        <Router>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Home
-                  setNavHeight={setNavHeight}
-                  navHeight={navHeight}
-                  handleTabsChange={handleTabsChange}
-                  loggingValue={loggingValue}
-                  showLoggingBtns={showLoggingBtns}
-                  showAccountMenu={showAccountMenu}
-                  setShowLoggingBtns={setShowLoggingBtns}
-                  setShowAccountMenu={setShowAccountMenu}
-                />
-              }
-            />
-            <Route
-              path="/logging"
-              element={
-                <Loginup
-                  navHeight={navHeight}
-                  setNavHeight={setNavHeight}
-                  handleTabsChange={handleTabsChange}
-                  loggingValue={loggingValue}
-                  setShowLoggingBtns={setShowLoggingBtns}
-                  setShowAccountMenu={setShowAccountMenu}
-                />
-              }
-            />
-            <Route path="account/*" element={<Account />} />
-          </Routes>
-        </Router>
+        <AuthProvider>
+          <Router>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Home
+                    setNavHeight={setNavHeight}
+                    navHeight={navHeight}
+                    handleTabsChange={handleTabsChange}
+                    loggingValue={loggingValue}
+                    showLoggingBtns={showLoggingBtns}
+                    showAccountMenu={showAccountMenu}
+                    setShowLoggingBtns={setShowLoggingBtns}
+                    setShowAccountMenu={setShowAccountMenu}
+                  />
+                }
+              />
+              <Route
+                path="/logging"
+                element={
+                  <Loginup
+                    navHeight={navHeight}
+                    setNavHeight={setNavHeight}
+                    handleTabsChange={handleTabsChange}
+                    loggingValue={loggingValue}
+                    setShowLoggingBtns={setShowLoggingBtns}
+                    setShowAccountMenu={setShowAccountMenu}
+                  />
+                }
+              />
+              <Route
+                path="account/*"
+                element={
+                  <RequireAuth>
+                    <Account />
+                  </RequireAuth>
+                }
+              />
+            </Routes>
+          </Router>
+        </AuthProvider>
       </ThemeProvider>
     </StyledEngineProvider>
   );
