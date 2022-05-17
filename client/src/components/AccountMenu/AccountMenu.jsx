@@ -11,9 +11,11 @@ import {
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { Link, Navigate } from "react-router-dom";
-const AccountMenu = ({ setShowAccountMenu, setShowLoggingBtns }) => {
+import { useAuth } from "../Auth/Auth";
+const AccountMenu = () => {
+  const Auth = useAuth();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [loggedOut, setLoggedOut] = useState(false);
+  // const [loggedOut, setLoggedOut] = useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -23,11 +25,10 @@ const AccountMenu = ({ setShowAccountMenu, setShowLoggingBtns }) => {
   };
 
   const handleLogout = () => {
-    setShowAccountMenu(false);
-    setShowLoggingBtns(true);
-    setLoggedOut(true);
+    // setLoggedOut(true);
+    Auth.logout();
   };
-  if (loggedOut === true) return <Navigate to="/" />;
+  // if (loggedOut === true) return <Navigate to="/" />;
   return (
     <>
       <Tooltip title="Account settings">
