@@ -4,26 +4,10 @@ import Navbar from "../Navbar/Navbar";
 import Search from "../Search/Search";
 import "./Header.scss";
 
-const Header = ({
-  setNavHeight,
-  handleTabsChange,
-  navHeight,
-  loggingValue,
-  showLoggingBtns,
-  showAccountMenu,
-  setShowLoggingBtns,
-  setShowAccountMenu,
-}) => {
+const Header = ({ handleTabsChange }) => {
   return (
     <Box className="headerCont">
-      <Navbar
-        setNavHeight={setNavHeight}
-        handleTabsChange={handleTabsChange}
-        showLoggingBtns={showLoggingBtns}
-        showAccountMenu={showAccountMenu}
-        setShowAccountMenu={setShowAccountMenu}
-        setShowLoggingBtns={setShowLoggingBtns}
-      />
+      <Navbar handleTabsChange={handleTabsChange} />
       <Search />
     </Box>
   );

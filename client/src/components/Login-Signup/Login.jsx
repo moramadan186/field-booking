@@ -15,7 +15,7 @@ import axios from "axios";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Logo from "./../Logo/Logo";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "./../Auth/Auth";
 import club1 from "../../assets/club1.jpeg";
 import club2 from "../../assets/club2.jpeg";
@@ -34,7 +34,7 @@ export const VisibilityIcon = ({ password, setPassword }) => {
   );
 };
 
-const Login = ({ handleClick, setShowLoggingBtns, setShowAccountMenu }) => {
+const Login = ({ handleClick }) => {
   const [userNameOrEmail, setUserNameOrEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkRemember, setCheckRemember] = useState(false);
@@ -43,12 +43,14 @@ const Login = ({ handleClick, setShowLoggingBtns, setShowAccountMenu }) => {
   // const [toHome, setToHome] = React.useState(false);
   const navigate = useNavigate();
   const Auth = useAuth();
+  const location = useLocation();
+  const redirectPath = location.state?.path || "/";
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:8080/sign-in", {
-      userNameOrEmail: userNameOrEmail,
-      password: password,
-    });
+    // await axios.post("http://localhost:8080/sign-in", {
+    //   userNameOrEmail: userNameOrEmail,
+    //   password: password,
+    // });
 
     /* 
     - after checking that user have an account in backend ,
@@ -70,6 +72,7 @@ const Login = ({ handleClick, setShowLoggingBtns, setShowAccountMenu }) => {
     */
 
     const successUser = {
+      userId:"1234566787654",
       firstName: "Mohamed",
       surName: "Ramadan",
       email: "mr01028760097@gmail.com",
@@ -78,8 +81,10 @@ const Login = ({ handleClick, setShowLoggingBtns, setShowAccountMenu }) => {
       profileIMG: "link",
       cartItems: [
         {
-          id: 1,
-          checked: false,
+          bookedId: 1,
+          userId:1,
+          adminId:1,
+          status: false,
           fieldName: "club 1",
           fieldImage: club1,
           date: "15/5/2022",
@@ -88,7 +93,7 @@ const Login = ({ handleClick, setShowLoggingBtns, setShowAccountMenu }) => {
         },
         {
           id: 2,
-          checked: true,
+          status: true,
           fieldName: "club 2",
           fieldImage: club2,
           date: "15/5/2022",
@@ -98,9 +103,7 @@ const Login = ({ handleClick, setShowLoggingBtns, setShowAccountMenu }) => {
       ],
     };
     Auth.login(successUser);
-    navigate("/");
-    setShowLoggingBtns(false);
-    setShowAccountMenu(true);
+    navigate(redirectPath, { replace: true });
 
     /*
     - if backend not found user

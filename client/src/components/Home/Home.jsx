@@ -5,28 +5,10 @@ import Popular from "./Popular";
 import "./Home.scss";
 import { PageContainer } from "./../../App";
 const Home = (props) => {
-  const {
-    setNavHeight,
-    navHeight,
-    handleTabsChange,
-    loggingValue,
-    showLoggingBtns,
-    showAccountMenu,
-    setShowLoggingBtns,
-    setShowAccountMenu,
-  } = props;
+  const { handleTabsChange } = props;
   return (
     <Box className="pageLayout">
-      <Header
-        setNavHeight={setNavHeight}
-        navHeight={navHeight}
-        handleTabsChange={handleTabsChange}
-        loggingValue={loggingValue}
-        showLoggingBtns={showLoggingBtns}
-        showAccountMenu={showAccountMenu}
-        setShowLoggingBtns={setShowLoggingBtns}
-        setShowAccountMenu={setShowAccountMenu}
-      />
+      <Header handleTabsChange={handleTabsChange} />
       <Box className="popularClubs">
         <PageContainer>
           <Popular />

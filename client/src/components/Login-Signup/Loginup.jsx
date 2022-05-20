@@ -41,16 +41,11 @@ function a11yProps(index) {
 export default function Loginup({
   loggingValue,
   handleTabsChange,
-  setNavHeight,
-  setShowLoggingBtns,
-  setShowAccountMenu,
 }) {
   return (
     <>
       <Navbar
-        setNavHeight={setNavHeight}
         handleTabsChange={handleTabsChange}
-        showLoggingBtns={false}
       />
       <Paper className="loggingCont" elevation={0}>
         <Paper className="tabsWraper" elevation={10}>
@@ -66,8 +61,6 @@ export default function Loginup({
           <TabPanel value={loggingValue} index={0}>
             <Login
               handleClick={handleTabsChange}
-              setShowLoggingBtns={setShowLoggingBtns}
-              setShowAccountMenu={setShowAccountMenu}
             />
           </TabPanel>
           <TabPanel value={loggingValue} index={1}>

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "@mui/material";
 import { PageContainer } from "./../../App";
@@ -9,16 +9,9 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import LoginIcon from "@mui/icons-material/Login";
 import Logo from "./../Logo/Logo";
 import AccountMenu from "./../AccountMenu/AccountMenu";
+import { useAuth } from "../Auth/Auth";
 
-const NavBar = ({
-  setNavHeight,
-  handleTabsChange,
-  loggingValue,
-  showLoggingBtns,
-  showAccountMenu,
-  setShowAccountMenu,
-  setShowLoggingBtns,
-}) => {
+const NavBar = ({ handleTabsChange, loggingValue }) => {
   /* Close the drawer when the user clicks outside of it */
   const [openDrawer, setOpenDrawer] = useState(false);
   const drawerRef = useRef(null);
@@ -26,6 +19,8 @@ const NavBar = ({
   const { width } = useWindowDimensions();
   const navHeightRef = useRef(null);
   const [showBg, setShowBg] = useState(false);
+  const pathName = useLocation().pathname;
+  const [navHeight, setNavHeight] = useState(null);
 
   const changeBackground = () => {
     if (window.scrollY >= 60) {
@@ -97,7 +92,7 @@ const NavBar = ({
                   Admin Dashbord
                 </Button>
               </Navbar.Item>
-              {showLoggingBtns ? (
+              {!useAuth().user && pathName !== "/logging" ? (
                 <>
                   <Navbar.Item>
                     <Button
@@ -126,12 +121,9 @@ const NavBar = ({
               ) : (
                 ""
               )}
-              {showAccountMenu ? (
+              {useAuth().user && pathName !== "/logging" ? (
                 <Navbar.Item>
-                  <AccountMenu
-                    setShowLoggingBtns={setShowLoggingBtns}
-                    setShowAccountMenu={setShowAccountMenu}
-                  />
+                  <AccountMenu />
                 </Navbar.Item>
               ) : (
                 ""
