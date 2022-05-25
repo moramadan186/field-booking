@@ -1,11 +1,11 @@
-import * as React from "react";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Tabs, Tab, Paper, Box } from "@mui/material";
 import Login from "./Login";
 import Signup from "./Signup";
-import Navbar from "../Navbar/Navbar";
+// import Navbar from "../Navbar/Navbar";
 import "./logging.scss";
-
+import { useAppState } from "../../App";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -38,10 +38,12 @@ function a11yProps(index) {
   };
 }
 
-export default function Loginup({
-  loggingValue,
-  handleTabsChange,
-}) {
+export default function Loginup({ loggingValue, handleTabsChange }) {
+  const { setOpenDrawer } = useAppState();
+  useEffect(() => {
+    setOpenDrawer(false);
+  }, []);
+
   return (
     <>
       {/* <Navbar
@@ -59,9 +61,7 @@ export default function Loginup({
             <Tab label="signup" {...a11yProps(1)} />
           </Tabs>
           <TabPanel value={loggingValue} index={0}>
-            <Login
-              handleClick={handleTabsChange}
-            />
+            <Login handleClick={handleTabsChange} />
           </TabPanel>
           <TabPanel value={loggingValue} index={1}>
             <Signup />

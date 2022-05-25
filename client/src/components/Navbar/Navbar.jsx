@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef} from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "@mui/material";
@@ -10,11 +10,11 @@ import LoginIcon from "@mui/icons-material/Login";
 import Logo from "./../Logo/Logo";
 import AccountMenu from "./../AccountMenu/AccountMenu";
 import { useAuth } from "../Auth/Auth";
-import { set } from "date-fns";
+import { useAppState } from "./../../App";
 
 const NavBar = ({ handleTabsChange, loggingValue }) => {
   /* Close the drawer when the user clicks outside of it */
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const { openDrawer, setOpenDrawer } = useAppState();
   const drawerRef = useRef(null);
   const StyledBurgerRef = useRef(null);
   const { width } = useWindowDimensions();

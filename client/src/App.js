@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createContext, useContext } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import styled, { createGlobalStyle } from "styled-components";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -9,8 +9,8 @@ import Account from "./components/Account/Account";
 import Home from "./components/Home/Home";
 import AuthProvider from "./components/Auth/Auth";
 import RequireAuth from "./components/Auth/RequireAuth";
-import SearchResult from './components/Search/SearchResult';
-import NavBar from './components/Navbar/Navbar';
+import SearchResult from "./components/Search/SearchResult";
+import NavBar from "./components/Navbar/Navbar";
 
 const theme = createTheme({
   palette: {
@@ -19,9 +19,10 @@ const theme = createTheme({
     },
   },
 });
-
+const AppContext = createContext(null);
 function App() {
-  const [loggingValue, setLoggingValue] = React.useState(0);
+  const [loggingValue, setLoggingValue] = useState(0);
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   const handleTabsChange = (event, newValue) => {
     setLoggingValue(newValue);
@@ -33,42 +34,42 @@ function App() {
         <CSSReset />
         <AuthProvider>
           <Router>
-          <NavBar handleTabsChange={handleTabsChange} />
-            <Routes>
-              <Route
-                path="/"
-                element={<Home handleTabsChange={handleTabsChange} />}
-              />
-              <Route
-                path="/logging"
-                element={
-                  <Loginup
-                    handleTabsChange={handleTabsChange}
-                    loggingValue={loggingValue}
-                  />
-                }
-              />
-              <Route
-                path="account/*"
-                element={
-                  <RequireAuth>
-                    <Account />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="search"
-                element={
-                  <SearchResult/>
-                }
-              />
-            </Routes>
+            <AppContext.Provider value={{ openDrawer, setOpenDrawer }}>
+              <NavBar handleTabsChange={handleTabsChange} />
+              <Routes>
+                <Route
+                  path="/"
+                  element={<Home handleTabsChange={handleTabsChange} />}
+                />
+                <Route
+                  path="/logging"
+                  element={
+                    <Loginup
+                      handleTabsChange={handleTabsChange}
+                      loggingValue={loggingValue}
+                    />
+                  }
+                />
+                <Route
+                  path="account/*"
+                  element={
+                    <RequireAuth>
+                      <Account />
+                    </RequireAuth>
+                  }
+                />
+                <Route path="search" element={<SearchResult />} />
+              </Routes>
+            </AppContext.Provider>
           </Router>
         </AuthProvider>
       </ThemeProvider>
     </StyledEngineProvider>
   );
 }
+export const useAppState = () => {
+  return useContext(AppContext);
+};
 //Styled Component
 const CSSReset = createGlobalStyle`
 *,
