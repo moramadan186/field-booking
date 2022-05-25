@@ -1,8 +1,5 @@
 var querie = require("../database/querie");
 var dbconnection = require("../database/connection");
-var userModel = require("../model/userModel");
-var clubModel = require("../model/clubModel");
-var bookingModel = require("../model/bookingModel");
 const { set } = require("express/lib/response");
 const { json } = require("body-parser");
 
