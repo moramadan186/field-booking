@@ -47,10 +47,10 @@ const Login = ({ handleClick }) => {
   const redirectPath = location.state?.path || "/";
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post("http://localhost:8080/sign-in", {
-      userNameOrEmail: userNameOrEmail,
-      password: password,
-    });
+    // const response = await axios.post("http://localhost:8080/log-in", {
+    //   userNameOrEmail: userNameOrEmail,
+    //   password: password,
+    // });
     /* 
     - after checking that user have an account in backend ,
     - backend send all user info like that
@@ -70,40 +70,40 @@ const Login = ({ handleClick }) => {
     - setShowLoggingBtns(false)
     */
 
-    // const successUser = {
-    //   userId: "1234566787654",
-    //   firstName: "Mohamed",
-    //   surName: "Ramadan",
-    //   email: "mr01028760097@gmail.com",
-    //   phone: "01028760097",
-    //   password: "12345",
-    //   profileIMG: "link",
-    //   cartItems: [
-    //     {
-    //       bookedId: 1,
-    //       userId: 1,
-    //       adminId: 1,
-    //       status: false,
-    //       fieldName: "club 1",
-    //       fieldImage: club1,
-    //       date: "15/5/2022",
-    //       time: "07:00",
-    //       price: 100,
-    //     },
-    //     {
-    //       id: 2,
-    //       status: true,
-    //       fieldName: "club 2",
-    //       fieldImage: club2,
-    //       date: "15/5/2022",
-    //       time: "09:00",
-    //       price: 120,
-    //     },
-    //   ],
-    // };
-    // Auth.login(successUser);
+    const successUser = {
+      userId: "1234566787654",
+      firstName: "Mohamed",
+      surName: "Ramadan",
+      email: "mr01028760097@gmail.com",
+      phone: "01028760097",
+      password: "12345",
+      profileIMG: "link",
+      cartItems: [
+        {
+          bookedId: 1,
+          userId: 1,
+          adminId: 1,
+          status: false,
+          fieldName: "club 1",
+          fieldImage: club1,
+          date: "15/5/2022",
+          time: "07:00",
+          price: 100,
+        },
+        {
+          id: 2,
+          status: true,
+          fieldName: "club 2",
+          fieldImage: club2,
+          date: "15/5/2022",
+          time: "09:00",
+          price: 120,
+        },
+      ],
+    };
+    Auth.login(successUser);
 
-    console.log(response);
+    // console.log(response);
     navigate(redirectPath, { replace: true });
 
     /*

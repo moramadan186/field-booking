@@ -9,6 +9,8 @@ import Account from "./components/Account/Account";
 import Home from "./components/Home/Home";
 import AuthProvider from "./components/Auth/Auth";
 import RequireAuth from "./components/Auth/RequireAuth";
+import SearchResult from './components/Search/SearchResult';
+import NavBar from './components/Navbar/Navbar';
 
 const theme = createTheme({
   palette: {
@@ -31,6 +33,7 @@ function App() {
         <CSSReset />
         <AuthProvider>
           <Router>
+          <NavBar handleTabsChange={handleTabsChange} />
             <Routes>
               <Route
                 path="/"
@@ -51,6 +54,12 @@ function App() {
                   <RequireAuth>
                     <Account />
                   </RequireAuth>
+                }
+              />
+              <Route
+                path="search"
+                element={
+                  <SearchResult/>
                 }
               />
             </Routes>

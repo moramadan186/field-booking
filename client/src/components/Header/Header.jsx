@@ -7,7 +7,7 @@ import "./Header.scss";
 const Header = ({ handleTabsChange }) => {
   return (
     <Box className="headerCont">
-      <Navbar handleTabsChange={handleTabsChange} />
+      {/* <Navbar handleTabsChange={handleTabsChange} /> */}
       <Search />
     </Box>
   );

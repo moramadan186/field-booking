@@ -44,9 +44,9 @@ export default function Loginup({
 }) {
   return (
     <>
-      <Navbar
+      {/* <Navbar
         handleTabsChange={handleTabsChange}
-      />
+      /> */}
       <Paper className="loggingCont" elevation={0}>
         <Paper className="tabsWraper" elevation={10}>
           <Tabs

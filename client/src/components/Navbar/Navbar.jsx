@@ -10,6 +10,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import Logo from "./../Logo/Logo";
 import AccountMenu from "./../AccountMenu/AccountMenu";
 import { useAuth } from "../Auth/Auth";
+import { set } from "date-fns";
 
 const NavBar = ({ handleTabsChange, loggingValue }) => {
   /* Close the drawer when the user clicks outside of it */
@@ -17,10 +18,11 @@ const NavBar = ({ handleTabsChange, loggingValue }) => {
   const drawerRef = useRef(null);
   const StyledBurgerRef = useRef(null);
   const { width } = useWindowDimensions();
-  const navHeightRef = useRef(null);
+  // const navHeightRef = useRef(null);
   const [showBg, setShowBg] = useState(false);
   const pathName = useLocation().pathname;
-  const [navHeight, setNavHeight] = useState(null);
+  // const [navHeight, setNavHeight] = useState(null);
+  const user = useAuth().user;
 
   const changeBackground = () => {
     if (window.scrollY >= 60) {
@@ -32,7 +34,8 @@ const NavBar = ({ handleTabsChange, loggingValue }) => {
 
   //will be true when user login successfully
   useEffect(() => {
-    setNavHeight(navHeightRef.current.clientHeight);
+    setOpenDrawer(false);
+    // setNavHeight(navHeightRef.current.clientHeight);
     document.addEventListener("mousedown", closeDrawer);
     return () => document.removeEventListener("mousedown", closeDrawer);
   }, []);
@@ -59,10 +62,14 @@ const NavBar = ({ handleTabsChange, loggingValue }) => {
     boxShadow: " 0 5px 10px -8px rgba(0, 0, 0, 0.2)",
   };
 
+  if (pathName.startsWith("/account")) return "";
   return (
     <>
       {width < 640 && <PageOverlay openDrawer={openDrawer} />}
-      <Navbar.Fixed ref={navHeightRef} style={showBg ? showBgStyle : {}}>
+      <Navbar.Fixed
+        //  ref={navHeightRef}
+        style={showBg ? showBgStyle : {}}
+      >
         <PageContainer>
           <Navbar.Wrapper>
             <Logo />
@@ -92,7 +99,7 @@ const NavBar = ({ handleTabsChange, loggingValue }) => {
                   Admin Dashbord
                 </Button>
               </Navbar.Item>
-              {!useAuth().user && pathName !== "/logging" ? (
+              {!user && pathName !== "/logging" ? (
                 <>
                   <Navbar.Item>
                     <Button
@@ -121,7 +128,7 @@ const NavBar = ({ handleTabsChange, loggingValue }) => {
               ) : (
                 ""
               )}
-              {useAuth().user && pathName !== "/logging" ? (
+              {user && pathName !== "/logging" ? (
                 <Navbar.Item>
                   <AccountMenu />
                 </Navbar.Item>
