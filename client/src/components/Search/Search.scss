@@ -78,16 +78,22 @@
 
 }
 
+.CardsLoadMore {
+    width: 100%;
+    padding-left: 260px;
+    padding-bottom: 2rem;
+
+    @media (max-width:600px) {
+        padding-left: 0;
+    }
+}
+
 .SearchCardsCont {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    padding-left: 260px;
 
-    @media (max-width:600px) {
-        padding-left: 0;
-    }
 }
 
 .searchFilterCont {
@@ -108,5 +114,17 @@
 .filterItemsContainer {
     h4 {
         color: rgb(95, 95, 95);
+    }
+}
+
+.loadMore{
+    text-align: center;
+    .loadMoreBtn{
+        color: white;
+        background-color: #002d57;
+        padding: 8px 40px;
+        text-transform: capitalize;
+        font-weight: lighter;
+
     }
 }

@@ -17,7 +17,7 @@ const FilterItems = ({ availableCulbs, showAvailable }) => {
             width: "100%",
             p: 1,
             mb: 2,
-            background: "#001356",
+            background: "#002d57",
             color: "#ffffff",
           }}
         >
@@ -31,7 +31,7 @@ const FilterItems = ({ availableCulbs, showAvailable }) => {
           <h3
             style={{
               marginBottom: "16px",
-              background: "#001356",
+              background: "#002d57",
               color: "#ffffff",
               padding: "10px",
               fontWeight: 400,
