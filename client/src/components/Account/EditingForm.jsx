@@ -26,7 +26,7 @@ const EditingForm = () => {
   };
   return (
     <>
-      <h2 style={{ margin: "3rem 0 ", color: "#5a5a5a" }}>Settings</h2>
+      <h2 style={{ marginBottom: "3rem", color: "#5a5a5a" }}>Settings</h2>
       <form onSubmit={handleEditingSubmit}>
         <FormControl fullWidth className="EditingFormControl">
           <Stack className="formControlStack">

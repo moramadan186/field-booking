@@ -21,7 +21,7 @@ const ResetPassword = () => {
   };
   return (
     <>
-      <h2 style={{ margin: "3rem 0 ", color: "#5a5a5a" }}>Reset password</h2>
+      <h2 style={{ marginBottom: "3rem", color: "#5a5a5a" }}>Reset password</h2>
       <form onSubmit={handleSubmit}>
         <Box sx={{ width: { md: "75%" } }}>
           <FormControl fullWidth className="EditingFormControl">

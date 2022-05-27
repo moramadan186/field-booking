@@ -278,7 +278,7 @@ export default function Account() {
         sx={{ flexGrow: 1, p: { sm: "1% 7%", xs: "1% 7% 1% 85px" } }}
       >
         <DrawerHeader />
-        <Box sx={{ width: { xs: "100%", md: "75%" } }}>
+        <Box sx={{ width: { xs: "100%", md: "75%" }, marginTop: "3rem" }}>
           <Routes>
             <Route path="settings" element={<EditingForm />} />
             <Route path="cart" element={<Cart />} />
