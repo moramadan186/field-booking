@@ -28,8 +28,9 @@ exports.userSingUp = async (req, res) => {
   }
 };
 exports.userLogeIn = async (req, res) => {
+  console.log(req.body);
   try {
-    var userEmail = req.body.email;
+    var userEmail = req.body.userNameOrEmail;
     var userPassword = req.body.password;
     var authorizationQuery = querie.queryList.AUTHORIZATION;
     var cartItemQuery = querie.queryList.CART_ITEMS;
@@ -37,7 +38,7 @@ exports.userLogeIn = async (req, res) => {
       userEmail,
       userPassword,
     ]);
-
+    
     if (userDBValue.rowCount === 0) {
       return res.status(500).json({ error: "Incorrect Email or Password" });
     } else {
