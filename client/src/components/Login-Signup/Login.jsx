@@ -128,7 +128,10 @@ const Login = ({ handleClick }) => {
     // Auth.login(successUser);
 
     console.log(response);
-    navigate(redirectPath, { replace: true });
+    if (response.status === 200) {
+      Auth.login(response.data);
+      navigate(redirectPath, { replace: true });
+    }
 
     /*
     - if backend not found user

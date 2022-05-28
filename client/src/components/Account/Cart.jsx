@@ -117,12 +117,12 @@ const Cart = () => {
             />
             {cartItems.map((cartItem) => (
               <CardItem
-                key={cartItem.bookedId}
-                bookedId={cartItem.bookedId}
-                fieldImage={cartItem.fieldImage}
-                fieldName={cartItem.fieldName}
+                key={cartItem.bookedid}
+                bookedId={cartItem.bookedid}
+                fieldImage={cartItem.fieldimage}
+                fieldName={cartItem.fieldname}
                 date={cartItem.date}
-                time={cartItem.time}
+                time={cartItem.booked_time_start}
                 price={cartItem.price}
                 handleRemoveCart={handleRemoveCart}
               />
