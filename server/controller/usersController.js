@@ -50,10 +50,10 @@ exports.userLogeIn = async (req, res) => {
         firstName: userDBValue.rows[0].user_firstname,
         surName: userDBValue.rows[0].user_surname,
         email: userDBValue.rows[0].user_email,
-        phone: userDBValue.rows[0].user_password,
-        password: userDBValue.rows[0].user_phone,
+        password: userDBValue.rows[0].user_password,
+        phone: userDBValue.rows[0].user_phone,
         profileIMG: userDBValue.rows[0].user_profileimg,
-        cardItems: cartItemDBValue.rows,
+        cartItems: cartItemDBValue.rows,
       });
     }
   } catch (err) {
