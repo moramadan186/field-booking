@@ -1,13 +1,14 @@
 var querie = require("../database/querie");
 var dbconnection = require("../database/connection");
-var date;
+var date = new Date();
 
 exports.search = async (req, res) => {
   console.log(req.body);
   try {
     var location = req.body.location;
     date = req.body.date;
-    console.log(req.body.date);
+    date= date.substring(0,4)+date.substring(4,6)+date.substring(6,10);
+    console.log(date);
     if (!location || !date) {
       return res.status(500).send({
         error:"location and date are required , cannot empty" ,
