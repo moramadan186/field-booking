@@ -7,6 +7,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import emptyCart from "../../assets/empty-cart.png";
+import axios from "axios";
 const cartItemSt = {
   height: "100%",
   display: "flex",
@@ -95,11 +96,25 @@ const Cart = () => {
     setCurrentCartId(bookedId);
     setOpen(true);
   };
-  const handleAgree = () => {
+  const handleAgree = async () => {
     agree = true;
     setOpen(false);
+    const oldCartItems = cartItems;
+    // remove from frontend
     if (agree) {
       setCardItems(cartItems.filter((item) => item.bookedid !== currentCartId));
+    }
+
+    try {
+      // remove from backend
+      await axios.post("http://localhost:8080/deleteCart", null, {
+        params: {
+          bookedId: currentCartId,
+        },
+      });
+    } catch (error) {
+      alert(error);
+      setCardItems(oldCartItems);
     }
   };
   return (
