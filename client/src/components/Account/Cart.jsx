@@ -99,7 +99,7 @@ const Cart = () => {
     agree = true;
     setOpen(false);
     if (agree) {
-      setCardItems(cartItems.filter((item) => item.bookedId !== currentCartId));
+      setCardItems(cartItems.filter((item) => item.bookedid !== currentCartId));
     }
   };
   return (

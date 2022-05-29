@@ -23,8 +23,9 @@ function Search() {
 
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
-    // await axios.post("http://localhost:8080/search", { date, location });
-    console.log({ date, location });
+    const response = await axios.post("http://localhost:8080/search", { date, location });
+
+    console.log(response);
     navigate("/search");
   };
 

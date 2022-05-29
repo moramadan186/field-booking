@@ -3,7 +3,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
-import cardImg from "./../../assets/club1.jpeg";
+// import cardImg from "./../../assets/club1.jpeg";
 const cardContedStyle = {
   width: "100%",
   minHeight: "45%",
@@ -23,13 +23,15 @@ const instantBookStyle = {
     backgroundColor: "#038548",
   },
 };
-const SearchCard = ({ name, price, location }) => {
+const SearchCard = ({ name, price, location,clubImg }) => {
   return (
-    <Card sx={{ width: 250, margin: "0 0.5rem 2rem" }}>
+    <Card sx={{ width: 250, margin: "0 0.5rem 2rem",border:"1px solid #6e6e6e7e",borderRadius:"0px" }}>
       <CardActionArea sx={{ position: "relative" }}>
         <CardMedia
           component="img"
-          image={cardImg}
+          // src="https://source.unsplash.com/random"
+          src={clubImg}
+          // image={clubImg}
           alt="club image"
           sx={{ height: "270px" }}
         />

@@ -11,6 +11,7 @@ import AuthProvider from "./components/Auth/Auth";
 import RequireAuth from "./components/Auth/RequireAuth";
 import SearchResult from "./components/Search/SearchResult";
 import NavBar from "./components/Navbar/Navbar";
+import SearchProvider from "./components/Search/SearchState";
 
 const theme = createTheme({
   palette: {
@@ -33,35 +34,37 @@ function App() {
       <ThemeProvider theme={theme}>
         <CSSReset />
         <AuthProvider>
-          <Router>
-            <AppContext.Provider value={{ openDrawer, setOpenDrawer }}>
-              <NavBar handleTabsChange={handleTabsChange} />
-              <Routes>
-                <Route
-                  path="/"
-                  element={<Home handleTabsChange={handleTabsChange} />}
-                />
-                <Route
-                  path="/logging"
-                  element={
-                    <Loginup
-                      handleTabsChange={handleTabsChange}
-                      loggingValue={loggingValue}
-                    />
-                  }
-                />
-                <Route
-                  path="account/*"
-                  element={
-                    <RequireAuth>
-                      <Account />
-                    </RequireAuth>
-                  }
-                />
-                <Route path="search" element={<SearchResult />} />
-              </Routes>
-            </AppContext.Provider>
-          </Router>
+          <SearchProvider>
+            <Router>
+              <AppContext.Provider value={{ openDrawer, setOpenDrawer }}>
+                <NavBar handleTabsChange={handleTabsChange} />
+                <Routes>
+                  <Route
+                    path="/"
+                    element={<Home handleTabsChange={handleTabsChange} />}
+                  />
+                  <Route
+                    path="/logging"
+                    element={
+                      <Loginup
+                        handleTabsChange={handleTabsChange}
+                        loggingValue={loggingValue}
+                      />
+                    }
+                  />
+                  <Route
+                    path="account/*"
+                    element={
+                      <RequireAuth>
+                        <Account />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route path="search" element={<SearchResult />} />
+                </Routes>
+              </AppContext.Provider>
+            </Router>
+          </SearchProvider>
         </AuthProvider>
       </ThemeProvider>
     </StyledEngineProvider>

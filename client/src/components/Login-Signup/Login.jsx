@@ -127,7 +127,6 @@ const Login = ({ handleClick }) => {
     // };
     // Auth.login(successUser);
 
-    console.log(response);
     if (response.status === 200) {
       Auth.login(response.data);
       navigate(redirectPath, { replace: true });
