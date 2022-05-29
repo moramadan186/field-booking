@@ -107,7 +107,7 @@ const Cart = () => {
 
     try {
       // remove from backend
-      await axios.post("http://localhost:8080/deleteCart", null, {
+      await axios.post("http://localhost:8080/deletecart", null, {
         params: {
           bookedId: currentCartId,
         },
