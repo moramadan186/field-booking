@@ -40,7 +40,7 @@ exports.userLogeIn = async (req, res) => {
     ]);
     
     if (userDBValue.rowCount === 0) {
-      return res.status(500).json({ error: "Incorrect Email or Password" });
+      return res.status(200).json({ error: "Incorrect Email or Password" });
     } else {
       var cartItemDBValue = await dbconnection.dbQuery(cartItemQuery, [
         userDBValue.rows[0].user_id,
@@ -59,5 +59,20 @@ exports.userLogeIn = async (req, res) => {
   } catch (err) {
     console.log("Error : " + err);
     return res.status(500).send({ error: "failed log in" });
+  }
+};
+exports.deleteCartItems = async (req, res) => {
+  console.log(req.body);
+  try {
+    var bookedId=req.params.bookedId;
+    var deleteCartItemQuery = querie.queryList.DELETE_CART_ITEM;
+    await dbconnection.dbQuery(deleteCartItemQuery, [
+      bookedId
+    ]);
+    return  res.status(200).json(' Cart Item is deleted');
+    
+  } catch (err) {
+    console.log("Error : " + err);
+    return res.status(500).json({ error: "sign up failed " });
   }
 };

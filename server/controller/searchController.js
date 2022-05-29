@@ -3,26 +3,23 @@ var dbconnection = require("../database/connection");
 var date;
 
 exports.search = async (req, res) => {
+  console.log(req.body);
   try {
     var location = req.body.location;
     date = req.body.date;
+    console.log(req.body.date);
     if (!location || !date) {
-      return res.status(500).json({
-        error: "location and date are required , cannot empty",
+      return res.status(500).send({
+        error:"location and date are required , cannot empty" ,
       });
     }
     var searchForClubQuery = querie.queryList.SEARCH_FOR_CLUB;
     var searchDBValue = await dbconnection.dbQuery(searchForClubQuery, [
-      location,
+      location
     ]);
-
-    if (searchDBValue.rowCount === 0) {
-      return res.status(500).json({ error: "this location out of service" });
-    } else {
       return res.status(200).json({
         ...searchDBValue.rows,
       });
-    }
   } catch (err) {
     console.log("Error : " + err);
     return res.status(500).send({ error: "failed search" });
