@@ -3,6 +3,26 @@ var dbconnection = require("../database/connection");
 const { set } = require("express/lib/response");
 const { json } = require("body-parser");
 
+exports.cartItems = async (req, res) => {
+  console.log(req.params);
+  try {
+    var userId = req.params.userId;
+    var cartItemQuery = querie.queryList.CART_ITEMS;
+    var cartItemDBValue = await dbconnection.dbQuery(cartItemQuery, [userId]);
+
+    if (cartItemDBValue.rowCount === 0) {
+      return res.status(200).json({ error: "your cart is empty" });
+    } else {
+      return res.status(200).json({
+        cartItems: cartItemDBValue.rows,
+      });
+    }
+  } catch (err) {
+    console.log("Error : " + err);
+    return res.status(500).send({ error: "failed log in" });
+  }
+};
+
 exports.addCart = async (req, res) => {
   console.log(req.body);
   try {
@@ -22,15 +42,8 @@ exports.addCart = async (req, res) => {
       timeStart,
       timeEnd,
     ]);
-    console.log(adminIdDBValue.rows[0].admins_id);
-
-    /* var cartItemQuery = querie.queryList.CART_ITEMS;
-    var cartItemDBValue = await dbconnection.dbQuery(cartItemQuery, [
-      userDBValue.rows[0].user_id,
-    ]); */
-
     return res.status(200).json({
-      cartItems:`new cart Added`,
+      cartItems: `new cart Added`,
     });
   } catch (err) {
     console.log("Error : " + err);
@@ -39,11 +52,12 @@ exports.addCart = async (req, res) => {
 };
 
 exports.deleteCartItems = async (req, res) => {
+  console.log(req.params);
   try {
     var bookedId = req.params.bookedId;
     var deleteCartItemQuery = querie.queryList.DELETE_CART_ITEM;
     await dbconnection.dbQuery(deleteCartItemQuery, [bookedId]);
-    return res.status(200).json(" Cart Item is deleted");
+    return res.status(200).json("Cart Item is deleted");
   } catch (err) {
     console.log("Error : " + err);
     return res.status(500).json({ error: "sign up failed " });
