@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../Auth/Auth";
 import Paper from "@mui/material/Paper";
 import { Box, Button } from "@mui/material";
@@ -83,10 +83,26 @@ const CardItem = ({
 const Cart = () => {
   const user = useAuth().user;
   const [cartItems, setCardItems] = useState(
-    user !== null ? user.cartItems : null
+    null
+    // user !== null ? user.cartItems : null
   );
   const [open, setOpen] = useState(false);
   const [currentCartId, setCurrentCartId] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user !== null) {
+        const response = await axios.post("http://localhost:8080/cart", {
+          userId: user.userId,
+        });
+        if (response.status === 200) {
+          setCardItems(response.data);
+        }
+      }
+    };
+    fetchData().catch(console.error);
+  }, []);
+
   let agree = false;
   const handleClose = () => {
     setOpen(false);
@@ -107,11 +123,7 @@ const Cart = () => {
 
     try {
       // remove from backend
-      await axios.post("http://localhost:8080/deletecart", null, {
-        params: {
-          bookedId: currentCartId,
-        },
-      });
+      await axios.delete(`http://localhost:8080/deletecart/${currentCartId}`);
     } catch (error) {
       alert(error);
       setCardItems(oldCartItems);
