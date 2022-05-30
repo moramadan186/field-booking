@@ -83,7 +83,7 @@ const CardItem = ({
 const Cart = () => {
   const user = useAuth().user;
   const [cartItems, setCardItems] = useState(
-    null
+    []
     // user !== null ? user.cartItems : null
   );
   const [open, setOpen] = useState(false);

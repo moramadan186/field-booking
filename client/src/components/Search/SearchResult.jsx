@@ -144,7 +144,7 @@ const clubsPerPage = 6;
 let arrayForHoldingClubs = [];
 const SearchResult = () => {
   const location = useLocation();
-  const [resultClubs, setResultClubs] = useState(location.state.clubs);
+  const [resultClubs, setResultClubs] = useState(location.state.clubs || []);
   const [clubsToShow, setClubsToShow] = useState([]);
   const ref = useRef(clubsPerPage);
   const loopWithSlice = (start, end) => {
