@@ -23,10 +23,17 @@ function Search() {
 
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post("http://localhost:8080/search", { date, location });
-
-    console.log(response);
-    navigate("/search");
+    try {
+      const response = await axios.post("http://localhost:8080/search", {
+        date,
+        location,
+      });
+      if (response.status === 200) {
+        navigate("/search", { state: { clubs: response.data } });
+      }
+    } catch (error) {
+      navigate("/search", { state: { clubs: [] } });
+    }
   };
 
   return (
