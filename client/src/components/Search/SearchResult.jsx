@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import SearchCard from "./SearchCard";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { PageContainer } from "./../../App";
 import SearchFilterDrawer from "./SearchFilterDrawer";
 import FilterItems from "./FilterItems";
 import "./Search.scss";
-const FilteredClubs = [
+const suggestedClubs = [
   {
     id: 2,
     name: "Camp no Stadium",
@@ -142,14 +143,17 @@ const FilteredClubs = [
 const clubsPerPage = 6;
 let arrayForHoldingClubs = [];
 const SearchResult = () => {
+  const location = useLocation();
+  const [resultClubs, setResultClubs] = useState(location.state.clubs);
   const [clubsToShow, setClubsToShow] = useState([]);
   const ref = useRef(clubsPerPage);
   const loopWithSlice = (start, end) => {
-    const slicedClubs = FilteredClubs.slice(start, end);
+    const slicedClubs = resultClubs.slice(start, end);
     arrayForHoldingClubs = arrayForHoldingClubs.concat(slicedClubs);
     setClubsToShow(arrayForHoldingClubs);
   };
   useEffect(() => {
+    arrayForHoldingClubs = [];
     loopWithSlice(0, clubsPerPage);
   }, []);
   const handleShowMoreClubs = () => {
@@ -159,34 +163,59 @@ const SearchResult = () => {
 
   return (
     <PageContainer>
-      <Box className="searchFilterMob">
-        <SearchFilterDrawer availableCulbs={32} />
-      </Box>
-      <Box className="searchResultContainer">
-        <div className="searchFilterCont">
-          <FilterItems showAvailable={true} availableCulbs={32} />
-        </div>
-        <div className="CardsLoadMore">
-          <div className="SearchCardsCont">
-            {clubsToShow.map(({ id, name, price, location, clubImg }) => (
-              <SearchCard
-                name={name}
-                clubImg={clubImg}
-                price={price}
-                location={location}
-                key={id}
-              />
-            ))}
-          </div>
-          <div className="loadMore">
-            <Button className="loadMoreBtn" onClick={handleShowMoreClubs}>
-              Load More
-            </Button>
-          </div>
-        </div>
-      </Box>
+      {clubsToShow.length > 0 ? (
+        <>
+          <Box className="searchFilterMob">
+            <SearchFilterDrawer availableCulbs={32} />
+          </Box>
+          <Box className="searchResultContainer">
+            <div className="searchFilterCont">
+              <FilterItems showAvailable={true} availableCulbs={32} />
+            </div>
+            <div className="CardsLoadMore">
+              <div className="SearchCardsCont">
+                {clubsToShow.map(({ id, name, price, location, clubImg }) => (
+                  <SearchCard
+                    name={name}
+                    clubImg={clubImg}
+                    price={price}
+                    location={location}
+                    key={id}
+                  />
+                ))}
+              </div>
+              <div className="loadMore">
+                <Button className="loadMoreBtn" onClick={handleShowMoreClubs}>
+                  Load More
+                </Button>
+              </div>
+            </div>
+          </Box>
+        </>
+      ) : (
+        <Box className="noClubsAndSuggested searchResultContainer">
+          <Box className="noClubs">
+            <h2>No Clubs Found</h2>
+          </Box>
+          <hr />
+          <Box className="suggestedClubs">
+            <h3>Suggested Clubs</h3>
+            <p>here you can find our most popular clubs </p>
+            <Box className="suggestedClubsCont SearchCardsCont">
+              {suggestedClubs.map(({ id, name, price, location, clubImg }) => (
+                <SearchCard
+                  name={name}
+                  clubImg={clubImg}
+                  price={price}
+                  location={location}
+                  key={id}
+                />
+              ))}
+            </Box>
+          </Box>
+        </Box>
+      )}
     </PageContainer>
   );
 };
-
 export default SearchResult;

@@ -92,7 +92,8 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
+    
 
 }
 
@@ -117,9 +118,10 @@
     }
 }
 
-.loadMore{
+.loadMore {
     text-align: center;
-    .loadMoreBtn{
+
+    .loadMoreBtn {
         color: white;
         background-color: #002d57;
         padding: 8px 40px;
@@ -127,4 +129,38 @@
         font-weight: lighter;
 
     }
+}
+
+.noClubsAndSuggested {
+    hr {
+        margin: 0;
+        border: none;
+        border-bottom: 1px solid #24DC89;
+    }
+
+    .noClubs h2 {
+        text-align: center;
+        margin: 100px 0;
+        font-size: 1.5rem;
+        color: #002d57;
+        font-weight: 600;
+    }
+
+    .suggestedClubs {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-top: 2rem;
+
+        >h3 {
+            font-weight: 500;
+            color: rgb(51, 50, 50);
+        }
+
+        >p {
+            margin-bottom: 2rem;
+        }
+
+    }
+
 }

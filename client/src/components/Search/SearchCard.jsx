@@ -25,7 +25,7 @@ const instantBookStyle = {
 };
 const SearchCard = ({ name, price, location,clubImg }) => {
   return (
-    <Card sx={{ width: 250, margin: "0 0.5rem 2rem",border:"1px solid #6e6e6e7e",borderRadius:"0px" }}>
+    <Card sx={{ width: 250, margin: "0 12px 1.7rem",border:"1px solid #6e6e6e7e",borderRadius:"0px" }}>
       <CardActionArea sx={{ position: "relative" }}>
         <CardMedia
           component="img"
