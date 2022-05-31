@@ -144,7 +144,9 @@ const clubsPerPage = 6;
 let arrayForHoldingClubs = [];
 const SearchResult = () => {
   const location = useLocation();
-  const [resultClubs, setResultClubs] = useState(location.state.clubs || []);
+  const [resultClubs, setResultClubs] = useState(
+    location.state.clubs.search || []
+  );
   const [clubsToShow, setClubsToShow] = useState([]);
   const ref = useRef(clubsPerPage);
   const loopWithSlice = (start, end) => {
@@ -174,10 +176,10 @@ const SearchResult = () => {
             </div>
             <div className="CardsLoadMore">
               <div className="SearchCardsCont">
-                {clubsToShow.map(({ id, name, price, location, clubImg }) => (
+                {clubsToShow.map(({ id, name, price, location, clubimg }) => (
                   <SearchCard
                     name={name}
-                    clubImg={clubImg}
+                    clubImg={clubimg}
                     price={price}
                     location={location}
                     key={id}

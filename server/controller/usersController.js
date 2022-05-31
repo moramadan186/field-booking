@@ -46,7 +46,7 @@ exports.userLogeIn = async (req, res) => {
         userDBValue.rows[0].user_id,
       ]);
       return res.status(200).json({
-        user_id: userDBValue.rows[0].user_id,
+        userId: userDBValue.rows[0].user_id,
         firstName: userDBValue.rows[0].user_firstname,
         surName: userDBValue.rows[0].user_surname,
         email: userDBValue.rows[0].user_email,

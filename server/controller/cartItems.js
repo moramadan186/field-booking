@@ -5,18 +5,14 @@ const { json } = require("body-parser");
 
 exports.cartItems = async (req, res) => {
   console.log(req.params);
+  console.log(req.body);
   try {
     var userId = req.params.userId;
     var cartItemQuery = querie.queryList.CART_ITEMS;
     var cartItemDBValue = await dbconnection.dbQuery(cartItemQuery, [userId]);
-
-    if (cartItemDBValue.rowCount === 0) {
-      return res.status(200).json({ error: "your cart is empty" });
-    } else {
       return res.status(200).json({
         cartItems: cartItemDBValue.rows,
       });
-    }
   } catch (err) {
     console.log("Error : " + err);
     return res.status(500).send({ error: "failed log in" });

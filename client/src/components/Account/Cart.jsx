@@ -82,25 +82,27 @@ const CardItem = ({
 
 const Cart = () => {
   const user = useAuth().user;
-  const [cartItems, setCardItems] = useState(
-    []
-    // user !== null ? user.cartItems : null
-  );
+  const [cartItems, setCardItems] = useState([]);
   const [open, setOpen] = useState(false);
   const [currentCartId, setCurrentCartId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       if (user !== null) {
-        const response = await axios.post("http://localhost:8080/cart", {
-          userId: user.userId,
-        });
+        const response = await axios.get(
+          `http://localhost:8080/cart/${user.userId}`
+        );
         if (response.status === 200) {
-          setCardItems(response.data);
+          setCardItems(response.data.cartItems);
         }
       }
     };
-    fetchData().catch(console.error);
+    fetchData().catch(() => {
+      setCardItems([]);
+    });
+    return () => {
+      setCardItems([]);
+    };
   }, []);
 
   let agree = false;

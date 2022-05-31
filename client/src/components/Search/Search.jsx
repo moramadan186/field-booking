@@ -28,6 +28,7 @@ function Search() {
         date,
         location,
       });
+
       if (response.status === 200) {
         navigate("/search", { state: { clubs: response.data } });
       }
