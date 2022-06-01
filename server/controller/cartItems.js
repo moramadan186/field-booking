@@ -10,9 +10,9 @@ exports.cartItems = async (req, res) => {
     var userId = req.params.userId;
     var cartItemQuery = querie.queryList.CART_ITEMS;
     var cartItemDBValue = await dbconnection.dbQuery(cartItemQuery, [userId]);
-      return res.status(200).json({
-        cartItems: cartItemDBValue.rows,
-      });
+    return res.status(200).json({
+      cartItems: cartItemDBValue.rows,
+    });
   } catch (err) {
     console.log("Error : " + err);
     return res.status(500).send({ error: "failed log in" });
@@ -57,5 +57,34 @@ exports.deleteCartItems = async (req, res) => {
   } catch (err) {
     console.log("Error : " + err);
     return res.status(500).json({ error: "sign up failed " });
+  }
+};
+
+exports.paymemt = async (req, res) => {
+  console.log(req.body);
+  try {
+    var userId = req.body.userId;
+    var bookedId = req.body.bookedId;
+    var phoneNumber = req.body.phoneNumber;
+    var totalPrice = req.body.totalPrice;
+    if (!userId || !bookedId || !phoneNumber || !totalPrice) {
+      return res.status(500).json({
+        error:
+          "userId , bookedId , phoneNumber and totalPrice are required , cannot empty",
+      });
+    }
+    var paymentDataQuery = querie.queryList.PAYMENT_DATA;
+    await dbconnection.dbQuery(paymentDataQuery, [
+      userId,
+      bookedId,
+      phoneNumber,
+      totalPrice,
+    ]);
+    var PAYEDQuery = querie.queryList.PAYED;
+    await dbconnection.dbQuery(PAYEDQuery, [bookedId]);
+    return res.status(200).json("Successful process");
+  } catch (err) {
+    console.log("Error : " + err);
+    return res.status(500).send({ error: "failed process" });
   }
 };

@@ -38,9 +38,9 @@ exports.userLogeIn = async (req, res) => {
       userEmail,
       userPassword,
     ]);
-    
+
     if (userDBValue.rowCount === 0) {
-      return res.status(200).json({ error: "Incorrect Email or Password" });
+      return res.status(500).json({ error: "Incorrect Email or Password" });
     } else {
       var cartItemDBValue = await dbconnection.dbQuery(cartItemQuery, [
         userDBValue.rows[0].user_id,
