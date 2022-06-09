@@ -47,10 +47,16 @@ const Login = ({ handleClick }) => {
   const redirectPath = location.state?.path || "/";
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post("http://localhost:8080/sign-in", {
-      userNameOrEmail: userNameOrEmail,
-      password: password,
-    });
+    try {
+      const response = await axios.post("http://localhost:8080/sign-in", {
+        userNameOrEmail: userNameOrEmail,
+        password: password,
+      });
+      Auth.login(response.data);
+      navigate(redirectPath, { replace: true });
+    } catch {
+      alert("User name or password not exist");
+    }
 
     /* 
     - after checking that user have an account in backend ,
@@ -128,11 +134,11 @@ const Login = ({ handleClick }) => {
     // };
     // Auth.login(successUser);
     // navigate(redirectPath, { replace: true });
-
-    if (response.status === 200) {
-      Auth.login(response.data);
-      navigate(redirectPath, { replace: true });
-    }
+    // console.log(response);
+    // if (response.status === 200) {
+    // } else {
+    //   alert("user name and password are required");
+    // }
 
     /*
     - if backend not found user

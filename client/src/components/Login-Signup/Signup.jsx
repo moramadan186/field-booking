@@ -30,6 +30,13 @@ const Signup = () => {
 
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
+    let validated = true;
+    Object.values(signupValues).forEach((item) => {
+      if (item === "" || item === false) {
+        validated = false;
+      }
+    });
+    if (validated !== true) alert("please fill all this inputs ");
     await axios.post("http://localhost:8080/sign-up", signupValues);
   };
 
