@@ -41,11 +41,12 @@ exports.selectedClub = async (req, res) => {
     });
     return res.status(200).json({
       clubName: clubProfileDB.rows[0].club_name,
+      from: clubProfileDB.rows[0].club_time_work_from,
+      to: clubProfileDB.rows[0].club_time_work_to,
+      location: clubProfileDB.rows[0].club_location,
+      clubPrice: clubProfileDB.rows[0].club_price,
       clubImage: clubProfileDB.rows[0].url_image,
       clubDescription: clubProfileDB.rows[0].club_description,
-      clubTimeWorkFrom: clubProfileDB.rows[0].club_time_work_from,
-      clubTimeWorkTo: clubProfileDB.rows[0].club_time_work_to,
-      clubPrice: clubProfileDB.rows[0].club_price,
       BusyTime: busyTime.rows,
     });
   } catch (err) {
