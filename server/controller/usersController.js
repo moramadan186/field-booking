@@ -39,6 +39,15 @@ exports.userLogeIn = async (req, res) => {
       userPassword,
     ]);
 
+
+    if (!userEmail || !userPassword ) {
+      return res.status(500).json({
+        error:
+          "user Email and user password are required , cannot empty",
+      });
+    }
+    
+
     if (userDBValue.rowCount === 0) {
       return res.status(500).json({ error: "Incorrect Email or Password" });
     } else {
