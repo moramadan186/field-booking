@@ -10,6 +10,7 @@ const cardContedStyle = {
   position: "absolute",
   bottom: "0",
   color: "#fff",
+  transition: "all 0.3s ease-in-out",
   background: "linear-gradient(0deg, #000000bb 40%, rgba(255,255,255,0) 100%)",
 };
 const instantBookStyle = {
@@ -23,19 +24,38 @@ const instantBookStyle = {
     backgroundColor: "#038548",
   },
 };
-const SearchCard = ({ name, price, location,clubImg }) => {
+const SearchCard = ({ name, price, location, clubImg }) => {
   return (
-    <Card sx={{ width: 250, margin: "0 12px 1.7rem",border:"1px solid #6e6e6e7e",borderRadius:"0px" }}>
-      <CardActionArea sx={{ position: "relative" }}>
+    <Card
+      sx={{
+        width: 250,
+        margin: "0 12px 1.7rem",
+        border: "1px solid #6e6e6e7e",
+        borderRadius: "0px",
+      }}
+    >
+      <CardActionArea
+        sx={{
+          position: "relative",
+          "&:hover>img": { transform: "scale(1.3)" },
+          "&:hover>.cardContedStyle": {
+            background:
+              "linear-gradient(0deg, #000000d6 40%, rgba(255,255,255,0) 100%)",
+          },
+        }}
+      >
         <CardMedia
           component="img"
           // src="https://source.unsplash.com/random"
           src={clubImg}
           // image={clubImg}
           alt="club image"
-          sx={{ height: "270px" }}
+          sx={{
+            transition: "all 0.3s ease-in-out",
+            height: "270px",
+          }}
         />
-        <CardContent sx={cardContedStyle}>
+        <CardContent sx={cardContedStyle} className="cardContedStyle">
           <Typography variant="h6" sx={{ fontWeight: "600", mb: 0.5 }}>
             {name}
           </Typography>
