@@ -11,6 +11,8 @@ import {
 import axios from "axios";
 import { VisibilityIcon } from "./Login";
 import Logo from "./../Logo/Logo";
+import { useAuth } from "./../Auth/Auth";
+import { useNavigate, useLocation } from "react-router-dom";
 const Signup = () => {
   const [signupValues, setSignupValues] = useState({
     firstName: "",
@@ -23,7 +25,10 @@ const Signup = () => {
   });
   const [showFirstPass, setShowFirstPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
-
+  const Auth = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const redirectPath = location.state?.path || "/";
   const handleChange = (fieldName) => (event) => {
     setSignupValues({ ...signupValues, [fieldName]: event.target.value });
   };
@@ -36,8 +41,22 @@ const Signup = () => {
         validated = false;
       }
     });
-    if (validated !== true) alert("please fill all this inputs ");
-    await axios.post("http://localhost:8080/sign-up", signupValues);
+    if (validated === false) alert("please fill all this inputs ");
+    else {
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/sign-up",
+          signupValues
+        );
+        if (response.status === 200) {
+          alert("Congratulation, Your Account Created");
+          Auth.login(response.data);
+          navigate(redirectPath, { replace: true });
+        }
+      } catch (err) {
+        alert(err.response);
+      }
+    }
   };
 
   return (

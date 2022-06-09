@@ -52,10 +52,12 @@ const Login = ({ handleClick }) => {
         userNameOrEmail: userNameOrEmail,
         password: password,
       });
-      Auth.login(response.data);
-      navigate(redirectPath, { replace: true });
-    } catch {
-      alert("User name or password not exist");
+      if (response.status === 200) {
+        Auth.login(response.data);
+        navigate(redirectPath, { replace: true });
+      }
+    } catch (err) {
+      alert(err.response.data.error);
     }
 
     /* 
@@ -134,11 +136,6 @@ const Login = ({ handleClick }) => {
     // };
     // Auth.login(successUser);
     // navigate(redirectPath, { replace: true });
-    // console.log(response);
-    // if (response.status === 200) {
-    // } else {
-    //   alert("user name and password are required");
-    // }
 
     /*
     - if backend not found user
