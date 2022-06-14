@@ -69,7 +69,7 @@ CREATE TABLE booking.booked (
 	user_id int4 NOT NULL,
 	admins_id int4 NOT NULL,
 	club_id int4 NOT NULL,
-	booked_data_work date NOT NULL,
+	booked_date_work text NOT NULL,
 	booked_time_start time NOT NULL,
 	booked_time_end time NOT NULL,
 	state bool NULL,
