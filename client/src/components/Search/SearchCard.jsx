@@ -4,6 +4,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 // import cardImg from "./../../assets/club1.jpeg";
+import { Link } from "react-router-dom";
+
 const cardContedStyle = {
   width: "100%",
   minHeight: "45%",
@@ -24,7 +26,7 @@ const instantBookStyle = {
     backgroundColor: "#038548",
   },
 };
-const SearchCard = ({ name, price, location, clubImg }) => {
+const SearchCard = ({ id, name, price, location, clubImg }) => {
   return (
     <Card
       sx={{
@@ -32,7 +34,10 @@ const SearchCard = ({ name, price, location, clubImg }) => {
         margin: "0 12px 1.7rem",
         border: "1px solid #6e6e6e7e",
         borderRadius: "0px",
+        textDecoration:"none",
       }}
+      component={Link}
+      to={`/club/${id}`}
     >
       <CardActionArea
         sx={{
