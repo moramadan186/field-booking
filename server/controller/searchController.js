@@ -31,10 +31,7 @@ exports.selectedClub = async (req, res) => {
     var clubProfileQuery = querie.queryList.CLUB_PROFILE;
     var clubProfileDB = await dbconnection.dbQuery(clubProfileQuery, [clubId]);
     var busyTimeQuery = querie.queryList.BUSY_TIME;
-    var busyTime = await dbconnection.dbQuery(busyTimeQuery, [
-      clubId,
-      date,
-    ]);
+    var busyTime = await dbconnection.dbQuery(busyTimeQuery, [clubId, date]);
     var from = parseInt(
       clubProfileDB.rows[0].club_time_work_from.substring(0, 2)
     );
@@ -43,21 +40,14 @@ exports.selectedClub = async (req, res) => {
     for (var i = from; i <= to; i++) {
       time[`0${i}:00:00`] = `available`;
     }
-  
+
     for (var j = 0; j < busyTime.rows.length; j++) {
       for (var i = from; i <= to; i++) {
-        if (busyTime.rows[j].start_time==`0${i}:00:00`) {
+        if (busyTime.rows[j].start_time == `0${i}:00:00`) {
           time[`0${i}:00:00`] = `busy`;
-          
         }
       }
     }
-    busyTime.rows.forEach((e) => {
-      e.startTime = e.start_time;
-      e.endTime = e.end_time;
-      delete e.start_time;
-      delete e.end_time;
-    });
     console.log(time);
     return res.status(200).json({
       clubName: clubProfileDB.rows[0].club_name,
