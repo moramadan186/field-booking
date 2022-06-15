@@ -13,6 +13,7 @@ import { VisibilityIcon } from "./Login";
 import Logo from "./../Logo/Logo";
 import { useAuth } from "./../Auth/Auth";
 import { useNavigate, useLocation } from "react-router-dom";
+import FormHelperText from "@mui/material/FormHelperText";
 const Signup = () => {
   const [signupValues, setSignupValues] = useState({
     firstName: "",
@@ -28,6 +29,10 @@ const Signup = () => {
   const Auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [Errors, setErrors] = useState({
+    connfirmPassword: "",
+    general: "",
+  });
   const redirectPath = location.state?.path || "/";
   const handleChange = (fieldName) => (event) => {
     setSignupValues({ ...signupValues, [fieldName]: event.target.value });
@@ -41,8 +46,12 @@ const Signup = () => {
         validated = false;
       }
     });
-    if (validated === false) alert("please fill all this inputs ");
+    if (validated === false)
+      setErrors((e) => ({ ...e, general: "Please fill all fields" }));
     else {
+      if (signupValues.password !== signupValues.confirmPassword) {
+        setErrors((e) => ({ ...e, confirmPassword: "Passwords do not match" }));
+      }
       try {
         const response = await axios.post(
           "http://localhost:8080/sign-up",
@@ -54,7 +63,7 @@ const Signup = () => {
           navigate(redirectPath, { replace: true });
         }
       } catch (err) {
-        alert(err.response);
+        setErrors((e) => ({ ...e, general: err.response.data.error }));
       }
     }
   };
@@ -157,6 +166,7 @@ const Signup = () => {
               ),
           }}
         />
+        <FormHelperText error>{Errors.confirmPassword}</FormHelperText>
         <FormControlLabel
           control={
             <Checkbox
@@ -172,6 +182,7 @@ const Signup = () => {
           }
           label="I accept the terms and conditions."
         />
+        <FormHelperText error>{Errors.general}</FormHelperText>
         <Button type="submit" variant="contained" color="primary">
           Sign up
         </Button>

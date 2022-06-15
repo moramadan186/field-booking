@@ -12,6 +12,7 @@ import RequireAuth from "./components/Auth/RequireAuth";
 import SearchResult from "./components/Search/SearchResult";
 import NavBar from "./components/Navbar/Navbar";
 import SearchProvider from "./components/Search/SearchState";
+import ClubProfile from './components/club/ClubProfile';
 
 const theme = createTheme({
   palette: {
@@ -61,6 +62,7 @@ function App() {
                     }
                   />
                   <Route path="search" element={<SearchResult />} />
+                  <Route path="club/:clubId" element={<ClubProfile />} />
                 </Routes>
               </AppContext.Provider>
             </Router>

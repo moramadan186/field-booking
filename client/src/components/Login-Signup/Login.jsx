@@ -17,8 +17,8 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Logo from "./../Logo/Logo";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "./../Auth/Auth";
-import club1 from "../../assets/club1.jpeg";
-import club2 from "../../assets/club2.jpeg";
+import joi from "joi-browser";
+import FormHelperText from "@mui/material/FormHelperText";
 
 export const VisibilityIcon = ({ password, setPassword }) => {
   return (
@@ -37,29 +37,69 @@ export const VisibilityIcon = ({ password, setPassword }) => {
 const Login = ({ handleClick }) => {
   const [userNameOrEmail, setUserNameOrEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({ userNameOrEmail: "", password: "" });
+  const [serverErrors, setServerErrors] = useState("");
   const [checkRemember, setCheckRemember] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
-  // const [toHome, setToHome] = React.useState(false);
   const navigate = useNavigate();
   const Auth = useAuth();
   const location = useLocation();
   const redirectPath = location.state?.path || "/";
+
+  const handlePasswordChange = (event) => {
+    validate(event.target.name, event.target.value);
+    setPassword(event.target.value);
+  };
+
+  const handleUserNameOrEmailChange = (event) => {
+    validate(event.target.name, event.target.value);
+    setUserNameOrEmail(event.target.value);
+  };
+
+  const validate = (fieldName, fieldValue) => {
+    const resErr = {};
+    let res = joi.validate(
+      { [fieldName]: fieldValue },
+      { [fieldName]: joi.string().required() },
+      {
+        abortEarly: false,
+      }
+    );
+    if (res.error == null) {
+      delete errors[fieldName];
+      return null;
+    }
+    for (const error of res.error.details) {
+      resErr[error.path] = error.message;
+    }
+    setErrors((e) => ({ ...e, ...resErr }));
+    return resErr;
+  };
+  const bulrEffect = (e) => {
+    let errs = errors;
+    errs[e.currentTarget.name] = "";
+    setErrors({ ...errs });
+  };
+
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:8080/sign-in", {
-        userNameOrEmail: userNameOrEmail,
-        password: password,
-      });
-      if (response.status === 200) {
-        Auth.login(response.data);
-        navigate(redirectPath, { replace: true });
+    validate("password", password);
+    validate("userNameOrEmail", userNameOrEmail);
+    if (Object.keys(errors).length === 0) {
+      try {
+        const response = await axios.post("http://localhost:8080/sign-in", {
+          userNameOrEmail,
+          password,
+        });
+        if (response.status === 200) {
+          Auth.login(response.data);
+          navigate(redirectPath, { replace: true });
+        }
+      } catch (err) {
+        setServerErrors(err.response.data.error);
       }
-    } catch (err) {
-      alert(err.response.data.error);
-    }
-
+    } else return;
     /* 
     - after checking that user have an account in backend ,
     - backend send all user info like that
@@ -78,7 +118,6 @@ const Login = ({ handleClick }) => {
     - setShowAccountmenu = true
     - setShowLoggingBtns(false)
     */
-
     // const successUser = {
     //   userId: "1234566787654",
     //   firstName: "Mohamed",
@@ -136,7 +175,6 @@ const Login = ({ handleClick }) => {
     // };
     // Auth.login(successUser);
     // navigate(redirectPath, { replace: true });
-
     /*
     - if backend not found user
     - backend send to router link: 8080/user-info --> not found
@@ -162,7 +200,10 @@ const Login = ({ handleClick }) => {
           fullWidth
           name="userNameOrEmail"
           value={userNameOrEmail}
-          onChange={(e) => setUserNameOrEmail(e.target.value)}
+          onChange={handleUserNameOrEmailChange}
+          error={errors.userNameOrEmail ? true : false}
+          helperText={errors.userNameOrEmail}
+          onBlur={bulrEffect}
         />
         <TextField
           size="small"
@@ -173,7 +214,10 @@ const Login = ({ handleClick }) => {
           type={showPassword ? "text" : "password"}
           name="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handlePasswordChange}
+          error={errors.password && errors.password !== "" ? true : false}
+          helperText={errors.password}
+          onBlur={bulrEffect}
           InputProps={{
             endAdornment:
               password !== "" ? (
@@ -186,6 +230,7 @@ const Login = ({ handleClick }) => {
               ),
           }}
         />
+        <FormHelperText error>{serverErrors}</FormHelperText>
         <FormControlLabel
           control={
             <Checkbox

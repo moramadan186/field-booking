@@ -178,6 +178,7 @@ const SearchResult = () => {
               <div className="SearchCardsCont">
                 {clubsToShow.map(({ id, name, price, location, clubimg }) => (
                   <SearchCard
+                    id={id}
                     name={name}
                     clubImg={clubimg}
                     price={price}
@@ -206,6 +207,7 @@ const SearchResult = () => {
             <Box className="suggestedClubsCont SearchCardsCont">
               {suggestedClubs.map(({ id, name, price, location, clubImg }) => (
                 <SearchCard
+                  id={id}
                   name={name}
                   clubImg={clubImg}
                   price={price}
