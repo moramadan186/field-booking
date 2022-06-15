@@ -1,6 +1,6 @@
 var querie = require("../database/querie");
 var dbconnection = require("../database/connection");
-var date;
+//var date;
 exports.search = async (req, res) => {
   console.log(req.body);
   try {
@@ -28,6 +28,10 @@ exports.search = async (req, res) => {
 exports.selectedClub = async (req, res) => {
   try {
     var clubId = req.params.clubId;
+    var date = req.params.date;
+    if (!date) {
+      return res.status(500).json("date is empty")
+    }
     var clubProfileQuery = querie.queryList.CLUB_PROFILE;
     var clubProfileDB = await dbconnection.dbQuery(clubProfileQuery, [clubId]);
     var busyTimeQuery = querie.queryList.BUSY_TIME;
@@ -48,7 +52,7 @@ exports.selectedClub = async (req, res) => {
         }
       }
     }
-    console.log(time);
+    console.log(date);
     return res.status(200).json({
       clubName: clubProfileDB.rows[0].club_name,
       from: clubProfileDB.rows[0].club_time_work_from,
