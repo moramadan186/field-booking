@@ -2,8 +2,6 @@ import { useState } from "react";
 import { Box, Button, TextField, Paper } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 const FilterItems = ({ availableCulbs, showAvailable }) => {
   const [date, setDate] = useState(new Date());
@@ -27,7 +25,6 @@ const FilterItems = ({ availableCulbs, showAvailable }) => {
         ""
       )}
       <Paper elevation={3} sx={{ width: "100%" }}>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
           <h3
             style={{
               marginBottom: "16px",
@@ -91,7 +88,6 @@ const FilterItems = ({ availableCulbs, showAvailable }) => {
               </Button>
             </Box>
           </Box>
-        </LocalizationProvider>
       </Paper>
     </Box>
   );

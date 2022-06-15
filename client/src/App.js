@@ -13,6 +13,8 @@ import SearchResult from "./components/Search/SearchResult";
 import NavBar from "./components/Navbar/Navbar";
 import SearchProvider from "./components/Search/SearchState";
 import ClubProfile from './components/club/ClubProfile';
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 const theme = createTheme({
   palette: {
@@ -32,43 +34,46 @@ function App() {
 
   return (
     <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={theme}>
-        <CSSReset />
-        <AuthProvider>
-          <SearchProvider>
-            <Router>
-              <AppContext.Provider value={{ openDrawer, setOpenDrawer }}>
-                <NavBar handleTabsChange={handleTabsChange} />
-                <Routes>
-                  <Route
-                    path="/"
-                    element={<Home handleTabsChange={handleTabsChange} />}
-                  />
-                  <Route
-                    path="/logging"
-                    element={
-                      <Loginup
-                        handleTabsChange={handleTabsChange}
-                        loggingValue={loggingValue}
-                      />
-                    }
-                  />
-                  <Route
-                    path="account/*"
-                    element={
-                      <RequireAuth>
-                        <Account />
-                      </RequireAuth>
-                    }
-                  />
-                  <Route path="search" element={<SearchResult />} />
-                  <Route path="club/:clubId" element={<ClubProfile />} />
-                </Routes>
-              </AppContext.Provider>
-            </Router>
-          </SearchProvider>
-        </AuthProvider>
-      </ThemeProvider>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <ThemeProvider theme={theme}>
+          <CSSReset />
+          <AuthProvider>
+            <SearchProvider>
+              <Router>
+                <AppContext.Provider value={{ openDrawer, setOpenDrawer }}>
+                  <NavBar handleTabsChange={handleTabsChange} />
+                  <Routes>
+                    <Route
+                      path="/"
+                      element={<Home handleTabsChange={handleTabsChange} />}
+                    />
+                    <Route
+                      path="/logging"
+                      element={
+                        <Loginup
+                          handleTabsChange={handleTabsChange}
+                          loggingValue={loggingValue}
+                        />
+                      }
+                    />
+                    <Route
+                      path="account/*"
+                      element={
+                        <RequireAuth>
+                          <Account />
+                        </RequireAuth>
+                      }
+                    />
+                    <Route path="search" element={<SearchResult />} />
+                    <Route path="club/:clubId" element={<ClubProfile />} />
+                  </Routes>
+                </AppContext.Provider>
+              </Router>
+            </SearchProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </LocalizationProvider>
+
     </StyledEngineProvider>
   );
 }
