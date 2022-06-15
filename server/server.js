@@ -7,7 +7,7 @@ var cartItemsRouter = require("./route/cartItemsRouter");
 var adminsRouter = require("./route/adminsRouter");
 var clubRouter = require("./route/clubRouter");
 
-const PORT = process.env.port;
+const PORT = process.env.PORT || 5000;
 var app = express();
 app.use(cors());
 
